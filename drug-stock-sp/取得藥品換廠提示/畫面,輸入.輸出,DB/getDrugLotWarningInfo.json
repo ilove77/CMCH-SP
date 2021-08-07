@@ -1,0 +1,172 @@
+名稱：取得藥品換廠提示
+
+(PUT)API：http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugExtendFCNC/GetDrugLotWarningInfo
+
+
+input：
+{
+
+    "medCode": "ISMOFL2",
+
+}
+
+output：{
+message: ""
+//15 筆資料
+object: 
+[
+    [
+        {
+          "stockNo": "1P11",
+          "stockName": "西藥管理組",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "2P11",
+          "stockName": "北港西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "4P11",
+          "stockName": "培德西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "5P11",
+          "stockName": "豐分西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "6P11",
+          "stockName": "中英西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "7P11",
+          "stockName": "竹醫西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "AP11",
+          "stockName": "安南西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "CP11",
+          "stockName": "益家西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "FP11",
+          "stockName": "東分西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "HP11",
+          "stockName": "草屯西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "KP11",
+          "stockName": "惠盛西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "LP11",
+          "stockName": "兒童西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "NP11",
+          "stockName": "北分院西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "SP11",
+          "stockName": "陽光西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        },
+        {
+          "stockNo": "YP11",
+          "stockName": "亞大西藥庫",
+          "medCode": "ISMOFL2 ",
+          "medName": "Smoflipid(斯莫) 20% 100mL/Bot(複方)",
+          "lotNo": ",無",
+          "warnSdate": "2021-05-11T00:00:00+08:00",
+          "warnEdate": "2021-08-31T00:00:00+08:00",
+          "remark": "預計110年7月以後，標籤變更"
+        }
+      ]
+
+
+]

@@ -1,0 +1,35 @@
+input:{
+    batchNo: 140520
+    check: true
+    checkNo: 471122
+    checkQty: 3000
+    checkTime: "2021-07-07T08:59:58+08:00"
+    checkType: 10
+    checkTypeName: "訂單"
+    disPlayNo: 0
+    drugCode: 527
+    drugName: "【美平】 Meropenem Trihydrate 250mg/Vial"
+    expDate: "2024-02-29T00:00:00+08:00"
+    expDateStr: "20240229"
+    invoiceDate: "20210706"
+    invoiceNo: "PM53010951"
+    isDirectlyIn: false
+    lotNo: "2097C"
+    lotNoDate: "2097C-20240229"
+    medCode: "IMEROPE "
+    orginalExpDate: "2024-02-29T00:00:00+08:00"
+    orginalInvNo: "PM53010951"
+    orginalLotNo: "2097C"
+    purchaseNo: 349421
+    purchaseQty: 3000
+    showCheckBox: true
+    showInput: false
+    stockName: "西藥管理組"
+    stockNo: "1P11"
+    systemUser: 22342
+    unit: 70
+    unitName: "Vial"
+
+}
+
+output:true

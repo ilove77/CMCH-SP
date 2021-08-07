@@ -1,0 +1,19 @@
+名稱:採購單列印
+api(put):/WebApi/DrugStockManager/DrugPurchase/DrugPrintPurchase
+input:{
+deliveryTime: "2021-07-10"
+demandQty: 4800
+drugCode: 251
+drugName: "針【敏速平】 Dexamethasone phosphate 5mg/mL/Amp"
+medCode: "IDEXAME "
+orgName: "信東生技股份有限公司                    "
+orgNo: "022       "
+purchaseNo: 349412
+purchaseTime: "2021-07-05"
+remark: "無"
+sendTime: "2021-07-05T10:35:16+08:00"
+stockNo: "1P11"
+unit: 60
+unitName: "Amp"
+
+}

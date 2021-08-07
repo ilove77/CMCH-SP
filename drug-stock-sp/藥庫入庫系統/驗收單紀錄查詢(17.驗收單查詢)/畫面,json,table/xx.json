@@ -1,0 +1,48 @@
+put:Request URL: http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugCheck/GetDrugCheckInfos
+
+input:{
+    branchCode: "1"
+    checkETime: "2021-08-05"
+    checkSTime: "2021-08-01"
+    checkStatus: "80"
+    drugCode: ""
+    inputValue: ""
+    lotNo: ""
+    purchaseNo: "358669"
+    stockNo: "1P11"
+    
+}
+
+output:{
+    [
+        {
+          "check": false,
+          "checkNo": 482422,
+          "disPlayNo": 0,
+          "purchaseNo": 358669,
+          "stockNo": "1P11",
+          "stockName": "西藥管理組",
+          "drugCode": 185,
+          "medCode": "ICEFAZO2",
+          "drugName": "【Stazolin】Cefazolin 1000 mg/Vial",
+          "checkType": 10,
+          "checkTypeName": "訂單",
+          "checkQty": 1300,
+          "checkTime": "2021-08-03T11:58:10+08:00",
+          "purchaseQty": 3600,
+          "unit": 70,
+          "unitName": "Vial",
+          "batchNo": 145354,
+          "lotNo": "IS090628",
+          "expDate": "2023-05-30T00:00:00+08:00",
+          "expDateStr": "20230530",
+          "invoiceNo": "QY42731469",
+          "orginalInvNo": "QY42731469",
+          "invoiceDate": "20210802",
+          "systemUser": 7263,
+          "orginalLotNo": "IS090628",
+          "orginalExpDate": "2023-05-30T00:00:00+08:00",
+          "isDirectlyIn": false
+        }
+      ]
+}

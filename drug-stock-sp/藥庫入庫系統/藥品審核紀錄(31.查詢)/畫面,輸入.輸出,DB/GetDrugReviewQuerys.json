@@ -1,0 +1,94 @@
+名稱：取得藥品審核清單
+
+(PUT)API：http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugSampleReview/GetDrugReviewQuerys
+
+input：
+{
+    branchCode: "1"
+    checkEDate: "2021-06-28T00:00:00.000Z"
+    checkSDate: "2021-06-21T00:00:00.000Z"
+    medCode: ""
+}
+
+output:{
+message: "無審核資料"
+// 5筆資料
+object:[
+    {
+      "checkNo": 216002,
+      "medCode": "TMECLIZ1",
+      "medName": "Meclizine(福元廠)25mg/Tab",
+      "brandName": "Meclizine 25mg/Tab",
+      "drugStockQty": 0,
+      "isLicense": true,
+      "isExterior": false,
+      "isLotNo": true,
+      "isEffect": true,
+      "isCoA": false,
+      "isHighAlert": false,
+      "trialUser": "鄭啟在",
+      "remark": ""
+    },
+    {
+      "checkNo": 216003,
+      "medCode": "LBUTORP",
+      "medName": "Butorphanol 10mg/mL 2.5mL/Bot",
+      "brandName": "Butaro nasal spray 10mg/mL 2.5mL/Bot",
+      "drugStockQty": 0,
+      "isLicense": true,
+      "isExterior": false,
+      "isLotNo": true,
+      "isEffect": true,
+      "isCoA": false,
+      "isHighAlert": false,
+      "trialUser": "鄭啟在",
+      "remark": ""
+    },
+    {
+      "checkNo": 216004,
+      "medCode": "OPOVIDO",
+      "medName": "Povidone Iodine Oint 10% 10g/Tube",
+      "brandName": "Biodyne Oint 10% 10g/Tube",
+      "drugStockQty": 0,
+      "isLicense": true,
+      "isExterior": false,
+      "isLotNo": true,
+      "isEffect": true,
+      "isCoA": false,
+      "isHighAlert": false,
+      "trialUser": "鄭啟在",
+      "remark": ""
+    },
+    {
+      "checkNo": 216005,
+      "medCode": "IPG2",
+      "medName": "PG2 Lyo. injection 500mg/Vial",
+      "brandName": "PG2 Lyo. injection 500mg/Vial",
+      "drugStockQty": 0,
+      "isLicense": true,
+      "isExterior": false,
+      "isLotNo": true,
+      "isEffect": true,
+      "isCoA": false,
+      "isHighAlert": false,
+      "trialUser": "鄭啟在",
+      "remark": ""
+    },
+    {
+      "checkNo": 216006,
+      "medCode": "ISOONME",
+      "medName": "Soonmelt(Amoxicillin/Clavulanate)複方",
+      "brandName": "Soonmelt 1.2g/Vial",
+      "drugStockQty": 0,
+      "isLicense": true,
+      "isExterior": false,
+      "isLotNo": true,
+      "isEffect": true,
+      "isCoA": false,
+      "isHighAlert": false,
+      "trialUser": "鄭啟在",
+      "remark": ""
+    }
+  ]
+status: false
+}

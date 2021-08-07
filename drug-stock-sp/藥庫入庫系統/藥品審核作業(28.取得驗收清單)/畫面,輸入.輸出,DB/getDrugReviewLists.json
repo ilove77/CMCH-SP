@@ -1,0 +1,48 @@
+名稱：取得藥品審核清單
+
+(PUT)API：http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugSampleReview/GetDrugReviewList
+
+input：
+{
+    branchNo: 1,
+    checkDate: "2021-06-19",
+    interval: 1
+}
+
+output:{
+message: ""
+// 3筆資料
+object:
+[
+    [
+        {
+          "branchCode": "1",
+          "checkNo": 465556,
+          "checkTime": "2021-06-19T09:51:45+08:00",
+          "medCode": "IUBISTE1",
+          "medName": "Ubistesin forte 4% 1.7mL/Vial牙科用複方",
+          "isHighAlert": false,
+          "isChecked": false
+        },
+        {
+          "branchCode": "1",
+          "checkNo": 465874,
+          "checkTime": "2021-06-19T09:51:54+08:00",
+          "medCode": "CPOL502 ",
+          "medName": "茉娜姿 足部修護霜 50mL/Tube",
+          "isHighAlert": false,
+          "isChecked": false
+        },
+        {
+          "branchCode": "1",
+          "checkNo": 465875,
+          "checkTime": "2021-06-19T09:51:54+08:00",
+          "medCode": "CPOL502 ",
+          "medName": "茉娜姿 足部修護霜 50mL/Tube",
+          "isHighAlert": false,
+          "isChecked": false
+        }
+    ]
+]
+status: true
+}

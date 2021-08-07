@@ -1,0 +1,24 @@
+api: http://his.cmuh.org.tw/WebApi/DrugStockManager/AutoDemand/SetScheduleInfo
+
+input:{
+    cycleFRI: false
+    cycleMON: false
+    cycleSAT: false
+    cycleSUN: false
+    cycleTHU: false
+    cycleTUE: false
+    cycleWED: false
+    endTime: "2021-07-16"
+    scheduleDate: ""
+    scheduleDtInfos: [{locationDesc: "", departNo: "1003", branchCode: "", shortName: "急症外傷醫院", departName: "急症外傷醫院",…}]
+    scheduleName: "1003 - 急症外傷醫院"
+    scheduleNo: ""
+    seqNo: 10
+    startDate: "2021-07-08 15:47"
+    stockLists: [,…]
+    supplyStock: "1P11"
+    systemUser: 37029
+
+}
+
+output:true

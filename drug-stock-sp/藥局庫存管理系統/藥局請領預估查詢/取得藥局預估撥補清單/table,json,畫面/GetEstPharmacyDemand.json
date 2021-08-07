@@ -1,0 +1,40 @@
+api:/WebApi/DrugStockManager/AutoDemand/GetEstPharmacyDemand/
+input:{
+auditUser: 0
+chargeUnit: 80
+chargeUnitName: "Bot"
+contactExt: 0
+demandAverageCap: 6
+demandQty: 0
+demandSafetyQty: 1
+demandStock: "1P12"
+demandStockName: "TPN調配室"
+demandType: 60
+demandUnit: 80
+drugCode: 111
+drugName: "Aminosteril Infant 10% 100mL/Bot"
+drugStockNoTheWayQty: 0
+drugType: 0
+grantDay: 3
+grantQty: 5
+invType: 10
+inventoryQty: 0
+isDirectlyIn: false
+isNeedSubsidized: false
+isOutOfStock: true
+maxQty: 0
+medCode: "IAMIN10 "
+onTheWayQty: 0
+packageQty: 1
+remark: null
+safetyQty: 0
+stockQty: -1867
+subsidizedQty: 1867
+supplyStock: null
+supplyStockName: null
+supplyStockQty: -1867
+systemUser: 0
+tmpOnTheWayQty: 0
+unitName: "Bot"
+}
+

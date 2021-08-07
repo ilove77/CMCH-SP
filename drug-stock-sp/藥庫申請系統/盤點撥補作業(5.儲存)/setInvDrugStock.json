@@ -1,0 +1,44 @@
+api : http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugDemand/SetInvListQty
+
+input:{
+    auditUser: 0
+    chargeUnit: 70
+    chargeUnitName: "Vial"
+    contactExt: "2615"
+    demandAverageCap: 0
+    demandQty: "20"
+    demandSafetyQty: 400//
+    demandStock: "1P11" //
+    demandStockName: "西藥管理組"
+    demandType: 40 //
+    demandUnit: 70 //
+    drugCode: 58
+    drugName: "局麻 [20mL] LIDOCAINE 2% 20mL/Vial"
+    drugStockNoTheWayQty: 0
+    drugType: 110//
+    grantDay: 0
+    grantQty: "0/Vial"
+    id: 20
+    invType: 25 //
+    inventoryQty: "20"
+    isDirectlyIn: false
+    isNeedSubsidized: false
+    isOutOfStock: false
+    maxQty: 15000//
+    medCode: "I2LIDO22"
+    onTheWayQty: 0
+    packageQty: 400 //
+    remark: ""
+    safetyQty: 0
+    stockQty: 640
+    subsidizedQty: 0
+    supplyStock: "    "
+    supplyStockName: ""
+    supplyStockQty: 0
+    systemUser: 37029
+    tmpOnTheWayQty: 0
+    unitName: "Vial"
+
+}
+
+output:true

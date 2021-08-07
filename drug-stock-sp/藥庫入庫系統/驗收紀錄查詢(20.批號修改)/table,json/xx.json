@@ -1,0 +1,33 @@
+api:/WebApi/DrugStockManager/DrugCheck/SetAltBatchNoWithInformix
+
+batchNo: 140227
+check: true
+checkNo: 469163
+checkQty: 12600
+checkTime: "2021-07-02T08:02:38+08:00"
+checkType: 10
+checkTypeName: "訂單"
+disPlayNo: 216391
+drugCode: 2733
+drugName: "AtorvaStatin 20mg/Tab"
+expDate: "2023-05-31T00:00:00+08:00"
+expDateStr: "20230531"
+id: 0
+invoiceDate: "20210630"
+invoiceNo: "NW49119718"
+isDirectlyIn: false
+lotNo: "EK5207"
+lotNoDate: "EK5207-20230531"
+medCode: "TATORVA2"
+orginalExpDate: "2023-05-31T00:00:00+08:00"
+orginalInvNo: "NW49119718"
+orginalLotNo: "EK5207"
+purchaseNo: 348495
+purchaseQty: 12600
+showCheckBox: true
+showInput: true
+stockName: "西藥管理組"
+stockNo: "1P11"
+systemUser: 37029
+unit: 10
+unitName: "Tab"

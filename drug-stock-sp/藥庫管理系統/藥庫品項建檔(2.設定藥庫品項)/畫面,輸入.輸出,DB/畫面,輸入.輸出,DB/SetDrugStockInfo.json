@@ -1,0 +1,65 @@
+名稱:設定 藥庫品項建檔
+
+API:http://his-staging.cmuh.org.tw/WebApi/DrugStockManager/DrugStock/SetDrugStockInfo
+
+input:
+{
+    averageCap: 0
+    checkNo: 0
+    checkTime: "0001-01-01T00:00:00+08:00"
+    contactExt: 0
+    demandNo: 0
+    demandQty: 0
+    demandUser: 0
+    drugCode: 3678
+    drugName: "Antivenin  t1"
+    drugType: 11
+    endTime: "0001-01-01T00:00:00+08:00"
+    inStockTime: "0001-01-01T00:00:00+08:00"
+    inputValue: "IATTTEST"
+    invQty: 0
+    invTime: "2999-12-31T00:00:00+08:00"
+    invType: 25
+    invoiceNo: null
+    isComplexIn: false
+    isInsert: false
+    isInvList: true
+    isNuReturn: false
+    isStart: true
+    isWarn: false
+    keepType: -1
+    lastQty: 0
+    lastTime: "2020-05-07T14:13:47+08:00"
+    maxQty: 10000
+    medCode: "IATTTEST"
+    monthQty: 0
+    monthTime: "2999-12-31T00:00:00+08:00"
+    orderTime: "0001-01-01T00:00:00+08:00"
+    orgNo: null
+    packageQty: 1
+    purchaseDays: 12
+    purchaseQty: 0
+    purchaseType: 10
+    receiveTime: "0001-01-01T00:00:00+08:00"
+    remark: null
+    reorderPoint: 10000
+    safetyQty: 3
+    startTime: "1997-07-02T00:00:00+08:00"
+    stockName: "西藥管理組"
+    stockNo: "1P11"
+    stockRatio: 100
+    stockUnit: 60
+    stockUnitName: "Amp"
+    storageNo: "AAAAA,AAA,AAAA"
+    supplyStock: "    "
+    supplyStockName: ""
+    supplyType: 10
+    supplyTypeName: "自動撥補"
+    systemUser: 36670
+    totalCount: 0
+    totalQty: 6037
+    validTime: "0001-01-01T00:00:00+08:00"
+    warnDays: 6
+}
+
+output: true

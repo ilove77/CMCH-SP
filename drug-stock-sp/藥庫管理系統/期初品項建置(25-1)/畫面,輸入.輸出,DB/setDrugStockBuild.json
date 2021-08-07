@@ -1,0 +1,23 @@
+input:{
+    drugCode: 10335
+    drugName: "[ 10片裝 ] 羅氏智航血糖健保試紙 10片/盒"
+    drugTypeName: "無"
+    isComplexIn: false
+    isComplexInName: "否"
+    maxQty: 20
+    medCode: "CACCU10 "
+    medName: "羅氏智航血糖健保試紙 10片/盒"
+    packageQty: 1
+    safetyQty: 0
+    stockNo: "1P11"
+    stockRatio: 0
+    storageNo: ""
+    storageNoA: ""
+    storageNoE: ""
+    storageNoO: ""
+    totalQty: 0
+    unitName: "Box"
+    warnDays: 1
+}
+
+output:true

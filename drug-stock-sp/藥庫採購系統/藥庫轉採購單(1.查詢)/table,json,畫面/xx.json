@@ -1,0 +1,55 @@
+api(put): DrugStockManager/DrugPurchase/GetDrugPurchaseInfos
+
+input:{
+    averageCap: ""
+    drugCode: ""
+    expenseDay: 1
+    inputValue: "IATTTEST"
+    orgName: ""
+    orgNo: ""
+    purchaseType: "1"
+    securityMult: ""
+    stockNo: "1P11"
+    zeroInventories: false
+    
+}
+
+output:{
+    {
+        "check": false,
+        "medCode": "IATTTEST",
+        "drugCode": 3678,
+        "genericName1": "Antivenin  t2",
+        "periodExpense": 0,
+        "purchaseDays": 12,
+        "allQty": 6040,
+        "stockQty": 6037,
+        "childQty": 0,
+        "safetyQty": 3,
+        "unit": 60,
+        "unitName": "Amp",
+        "onTheWayQty": 32,
+        "childOnTheWayQty": 0,
+        "totalOnTheWayQty": 32,
+        "packageQty": 1,
+        "buyQty": 0,
+        "purchaseType": 10,
+        "purchaseName": "Y((上月消耗帳/25(一個月=25天))*12天)",
+        "stockNo": "1P11",
+        "stockName": "西藥管理組",
+        "remark": null,
+        "purchaseTime": "0001-01-01T00:00:00+08:00",
+        "purchaseNo": 0,
+        "purchaseUser": 0,
+        "orgNo": "8888      ",
+        "maxQty": 10000,
+        "systemUser": 0,
+        "isWarn": false,
+        "safetyPoint": true,
+        "demandNo": 0,
+        "demandUser": 0,
+        "contactExt": 0,
+        "isDirectlyIn": false,
+        "demandNos": null
+      }
+}

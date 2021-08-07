@@ -1,0 +1,28 @@
+api(put) :http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugPurchase/SetDrugOrderExpedite/37029
+input:{
+checkQty: 0
+deliveryTime: "2021-06-28"
+drugCode: 7702
+drugInfo: "IATEZ12 -Atezolizumab(醫免) 1200mg/20mL/Vial"
+follow: 0
+isChecked: true
+isDelay: false
+isTodayFollow: false
+medCode: "IATEZ12 "
+medName: "Atezolizumab(醫免) 1200mg/20mL/Vial"
+onTheWayQty: 1
+orgName: "裕利股份有限公司                        "
+orgNo: "072       "
+purchaseNo: 348046
+purchaseQty: 1
+purchaseStatus: 60
+purchaseStatusName: "收貨入庫"
+purchaseTime: "2021-06-28"
+remark: "無"
+stockName: "西藥管理組"
+stockNo: "1P11"
+stockQty: 9
+unit: 70
+unitName: "Vial"
+
+}

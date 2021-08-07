@@ -1,0 +1,53 @@
+api:http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugStock/GetDrugInvMovement
+
+input:{
+    branchCode: "1"
+    endTime: "2021-06-30T00:00:00.000Z"
+    hosType: 1
+    monthTime: "2021-06-08T16:00:00.000Z"
+    reportNo: 46
+    startTime: "2021-06-01T00:00:00.000Z"
+    stockName: "" //可有可無
+    stockNo: "1030" //可有可無
+
+s
+}
+
+ourtput:{
+    "stockNo": "1030",//
+    "stockName": "國際醫療中心",//
+    "itemCode": 0,
+    "medCode": "LETHANO ",//
+    "itemName": "Ethanol 75% 500mL/Bot(乾洗手噴劑)",// itemName => drugName
+    "drugType": 110,// 不用顯示
+    "drugTypeName": "不計價",//
+    "invType": 10,
+    "invTypeName": "進口藥品",
+    "ratioUnitName": "Bot",//
+    "stockUnitName": "Bot",//
+    "stockRatio": 1,// 耗能轉換筆
+    "costPrice": 68, //找不到
+    "initialQty": 4, //找不到
+    "initialAmount": 272, //找不到
+    "checkQty": 0, //找不到
+    "returnQty": 0, // 找不到
+    "netPurchasesQty": 0, //
+    "checkAmount": 0, //找不到
+    "returnAmount": 0, //找不到
+    "netPurchasesAmount": 0, // ?purchaseQty
+    "consumeQty": 0, //找不到 
+    "avgCostPrice": 68,//找不到 
+    "consumeAmount": 0,//找不到 
+    "saleQty": 0,//找不到 
+    "saleAmount": 0,//找不到 
+    "ioType": "",//找不到 
+    "ioQty": 0,//找不到 
+    "ioAmount": 0,//找不到 
+    "lossesOverType": "",//找不到 
+    "lossesOverQty": 0,//找不到 
+    "lossesOverAmount": 0,//找不到 
+    "desiredClosingQty": 0,//找不到 
+    "desiredClosingAmount": 0,//找不到 
+    "closingQty": 4,//找不到 
+    "closingAmount": 272//找不到 
+  }

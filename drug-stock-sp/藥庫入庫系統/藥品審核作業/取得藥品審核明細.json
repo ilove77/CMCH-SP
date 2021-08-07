@@ -1,0 +1,46 @@
+名稱 : 取得藥品審核明細
+
+(PUT)API : http://his.cmuh.org.tw/WebApi/DrugStockManager/DrugSampleReview/GetDrugReviewDt
+
+
+input:{
+    branchCode: "1"
+    checkNo: 462622
+    checkTime: "2021-06-23T08:29:45+08:00"
+    id: 1
+    isChecked: false
+    isHighAlert: false
+    medCode: "LALCOHO "
+    medName: "75% Alcohol 500mL/Bot"
+    seqNo: 1
+}
+
+(單筆資料)
+output:
+    {
+        message: ""
+        object: 
+        {   
+            branchCode: "1"
+            brandName: "Taita hemodialysis No 111 3.8L/Bot"
+            checkNo: 467910
+            drugCode: 376
+            drugStockQty: 0
+            expDate: "2024-06-16T00:00:00+08:00"
+            isCoA: false
+            isEffect: true
+            isExterior: false
+            isLicense: true
+            isLotNo: true
+            keepType: 30
+            licenseNo: "衛署藥製字第037244號"
+            lotNo: "1                   "
+            medCode: "IHD111  "
+            medName: "Taita hemodialysis No 111 3.8L/Bot"
+            medPic: "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAA..."
+            remark: ""
+            systemUser: 0
+            trialDate: "0001-01-01T00:00:00+08:00"
+        }
+        status: true
+    }
