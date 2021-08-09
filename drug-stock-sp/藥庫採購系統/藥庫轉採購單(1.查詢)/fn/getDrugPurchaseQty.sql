@@ -29,7 +29,6 @@ AS BEGIN
                 AND b.StockNo     = a.DemandStock
                 AND b.DrugCode    = a.DrugCode
                 AND b.IsComplexIn = 1
-          )
-
+      )
    RETURN @buyQty
 END
