@@ -21,7 +21,7 @@ AS BEGIN
           [discountsDate] = a.DiscountsDate,
           [systemUser]    = a.SystemUser,
           [systemTime]    = a.SystemTime
-     FROM InvoiceDiscounts a
+     FROM [dbo].[InvoiceDiscounts] AS a
     WHERE a.InvoiceNo     = @invoiceNo
       AND a.ItemType      = @itemType
       AND a.DiscountsType = @discountsType
