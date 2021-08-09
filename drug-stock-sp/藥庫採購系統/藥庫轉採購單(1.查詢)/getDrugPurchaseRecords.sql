@@ -10,9 +10,8 @@ CREATE PROCEDURE [dbo].[getDrugPurchaseRecords](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @stockNo            CHAR(04) = JSON_VALUE(@params, '$.stockNo');
    DECLARE @orgNo              CHAR(10) = JSON_VALUE(@params, '$.orgNo');
-   DECLARE @medCode            CHAR(08) = JSON_VALUE(@params, '$.medCode');
-   DECLARE @lastMonthStartTime DATETIME = JSON_VALUE(@params, '$.lastMonthStartTime');
-   DECLARE @lastMonthEndTime   DATETIME = JSON_VALUE(@params, '$.lastMonthEndTime');
+   DECLARE @drugCode           INT      = JSON_VALUE(@params, '$.drugCode');
+   DECLARE @lastMonth          INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
    DECLARE @itemType           TINYINT  = 10; 
    DECLARE @currentTime        DATETIME = GETDATE();
 
@@ -25,19 +24,19 @@ AS BEGIN
            [buyQty]                = a.PurchaseQty,
            [onWayQty]              = [fn].[getDrugOnWayQty](a.StockNo, b.DrugCode),                   
            [unitName]              = [fn].[getUnitBasicName](b.ChargeUnit),                           
-           [hospitalQty]           = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, b.DrugCode), 
-           [totalInStockGrantQty]  = [fn].[getDrugBranchInStockGrantQty]('DrugStock', a.stockNo, b.drugCode, @lastMonthStartTime, @lastMonthEndTime), 
-           [totalOutStockGrantQty] = [fn].[getDrugBranchOutStockGrantQty]('DrugStock', a.stockNo, b.drugCode, @lastMonthStartTime, @lastMonthEndTime)
+           [stockTotalQty]         = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, b.DrugCode), 
+           [totalInStockGrantQty]  = [fn].[getDrugStockInQty]('DrugStock', a.stockNo, b.drugCode, @lastMonth), 
+           [totalOutStockGrantQty] = [fn].[getDrugStockOutQty]('DrugStock', a.stockNo, b.drugCode, @lastMonth)
       FROM DrugStockMt   AS a,
            DrugBasic     AS b,
            PurchaseBasic AS c
-     WHERE a.StockNo    = @stockNo   
+     WHERE a.StockNo    = @stockNo
+       AND a.DrugCode   = [fn].[numberFilter](@drugCode, a.DrugCode)   
        AND a.StartTime <= @currentTime
        AND a.EndTime   >= @currentTime
        AND b.DrugCode   = a.DrugCode
        AND b.StartTime <= @currentTime
        AND b.EndTime   >= @currentTime
-       AND b.MedCode    = [fn].[stringFilter](@medCode, b.MedCode)
        AND c.ItemCode   = a.DrugCode
        AND c.ItemType   = @itemType
        AND c.Represent  = [fn].[stringFilter](@orgNo, c.Represent)
@@ -54,8 +53,7 @@ DECLARE @params NVARCHAR(MAX) =
    "stockNo": "1P11",
    "orgNo": "",
    "medCode": "IATTTEST",
-   "lastMonthStartTime": "2021-06-01 00:00:00.000",
-   "lastMonthEndTime": "2021-06-30 00:00:00.000"
+   "currentDate": "2021-08-09"
 }
 ';
 
