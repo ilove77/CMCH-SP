@@ -33,7 +33,7 @@ AS BEGIN
           [sendRemark]   = a.SendRemark,  
           [systemUser]   = a.SystemUser,  
           [systemTime]   = a.SystemTime  
-     FROM DrugChecking AS a
+     FROM [dbo].[DrugChecking] AS a
     WHERE a.InvoiceNo IN (SELECT VALUE FROM OPENJSON(@params, '$.invoiceNos'))
       FOR JSON PATH
 END
