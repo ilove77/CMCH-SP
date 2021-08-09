@@ -24,4 +24,3 @@ AS BEGIN
       AND b.OutStockTime <= @outStockTime2
    RETURN @grantQty
 END
-   

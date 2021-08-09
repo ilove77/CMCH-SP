@@ -1,10 +1,5 @@
 USE [HealthResource]
 GO
-/****** Object:  UserDefinedFunction [fn].[getDrugPurchaseQty]    Script Date: 2021/8/9 上午 09:42:14 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 
 --- 程序名稱: getDrugPurchaseQty
 --- 程序說明: 取得藥品請領數量

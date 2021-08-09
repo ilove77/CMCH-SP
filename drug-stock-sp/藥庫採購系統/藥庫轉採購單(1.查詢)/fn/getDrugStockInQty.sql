@@ -6,7 +6,7 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/07/30
-ALTER FUNCTION [fn].[getDrugStockInQty] (@tableName VARCHAR(20), @stockNo CHAR(04), @drugCode INT, @inStockTime1 DATETIME, @inStockTime2 DATETIME)
+CREATE FUNCTION [fn].[getDrugStockInQty] (@tableName VARCHAR(20), @stockNo CHAR(04), @drugCode INT, @inStockTime1 DATETIME, @inStockTime2 DATETIME)
 RETURNS INT
 AS BEGIN
    DECLARE @grantQty INT = 0;
