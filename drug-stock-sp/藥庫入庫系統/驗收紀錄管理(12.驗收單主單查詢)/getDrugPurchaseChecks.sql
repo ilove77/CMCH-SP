@@ -1,5 +1,6 @@
 USE [HealthResource]
 GO
+
 --- 程序名稱：getDrugPurchaseChecks
 --- 程序說明：取得藥品驗收資訊
 --- 編訂人員：蔡易志
@@ -17,33 +18,34 @@ AS BEGIN
    DECLARE @purchaseStatus1 TINYINT     = 10;
    DECLARE @purchaseStatus2 TINYINT     = 69;
    
-   SELECT b.PurchaseNo   AS [purchaseNo],  
-          a.PurchaseTime AS [purchaseTime],        
-          b.DemandQty    AS [demandQty],
-          b.PurchaseQty  AS [purchaseQty],
-          b.GiftQty      AS [giftQty],
-          c.MedCode      AS [medCode],
-          b.DrugCode     AS [drugCode],
-          c.DrugName     AS [drugName],
-          a.OrgNo        AS [orgNo],      
-          b.CheckQty     AS [checkQty],
-          [fn].[getUnitBasicName](b.unit)  AS [unitName],
-          [fn].[getShortName](b.InStockNo) AS [stockName]
-     FROM [dbo].[DrugPurchaseMt] AS a,
-          [dbo].[DrugPurchaseDt] AS b,
+   SELECT [purchaseNo]   = a.PurchaseNo,     
+          [purchaseTime] = b.PurchaseTime,      
+          [demandQty]    = a.DemandQty,    
+          [purchaseQty]  = a.PurchaseQty,   
+          [giftQty]      = a.GiftQty,      
+          [medCode]      = c.MedCode,      
+          [drugCode]     = a.DrugCode,      
+          [drugName]     = c.DrugName,      
+          [orgNo]        = b.OrgNo,               
+          [checkQty]     = a.CheckQty,      
+          [unitName]     = [fn].[getUnitBasicName](a.unit),
+          [stockName]    = [fn].[getShortName](a.InStockNo)
+     FROM [dbo].[DrugPurchaseDt] AS a,
+          [dbo].[DrugPurchaseMt] AS b,
           [dbo].[DrugBasic]      AS c
-    WHERE a.PurchaseTime   BETWEEN  @purchaseTime1   AND @purchaseTime2
-      AND a.PurchaseStatus BETWEEN  @purchaseStatus1 AND @purchaseStatus2
-      AND a.PurchaseNo     = [fn].[numberFilter](@purchaseNo, a.PurchaseNo)
-      AND a.OrgNo          = [fn].[stringFilter](@orgNo, a.OrgNo)
+    WHERE a.InStockNo      LIKE @stockNo
+      AND a.DrugCode       = [fn].[numberFilter](@drugCode, a.DrugCode) 
       AND b.PurchaseNo     = a.PurchaseNo
-      AND b.DrugCode       = [fn].[numberFilter](@drugCode, b.DrugCode)     
-      AND b.InStockNo      LIKE @stockNo
+      AND b.PurchaseTime   BETWEEN  @purchaseTime1   AND @purchaseTime2
+      AND b.PurchaseStatus BETWEEN  @purchaseStatus1 AND @purchaseStatus2
+      AND b.PurchaseNo     = [fn].[numberFilter](@purchaseNo, a.PurchaseNo)
+      AND b.OrgNo          = [fn].[stringFilter](@orgNo, b.OrgNo)
+      AND c.DrugCode       = a.DrugCode
+      AND c.StartTime     <= b.PurchaseTime
+      AND c.EndTime       >= b.PurchaseTime
       AND c.MedCode        = [fn].[stringFilter](@medCode, c.MedCode)
-      AND c.DrugCode       = b.DrugCode
-      AND c.StartTime     <= a.PurchaseTime
-      AND c.EndTime       >= a.PurchaseTime
     ORDER BY a.PurchaseNo
+      FOR JSON PATH
 END
 GO
 
