@@ -23,4 +23,3 @@ AS BEGIN
       AND b.TranMonth = @tranMonth
    RETURN @monthQty
 END
-
