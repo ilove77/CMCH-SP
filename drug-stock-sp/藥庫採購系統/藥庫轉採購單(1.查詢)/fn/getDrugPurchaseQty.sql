@@ -17,18 +17,5 @@ AS BEGIN
    IF @purchaseType=10 OR @purchaseType=11
       SET @buyQty = @purchaseQty 
 
-   IF(@purchaseType=30) 
-      SET @buyQty = (
-             SELECT SUM(ISNULL(a.DemandQty,0))
-               FROM [dbo].[DrugDemand]  AS a,
-                    [dbo].[DrugStockMt] AS b
-              WHERE a.SupplyStock = @supplyStock 
-                AND a.DrugCode    = @drugCode 
-                AND a.DemandTime  BETWEEN @demandTime1 AND @demandTime2
-                AND a.DemandType  IN (40,45)
-                AND b.StockNo     = a.DemandStock
-                AND b.DrugCode    = a.DrugCode
-                AND b.IsComplexIn = 1
-      )
    RETURN @buyQty
 END
