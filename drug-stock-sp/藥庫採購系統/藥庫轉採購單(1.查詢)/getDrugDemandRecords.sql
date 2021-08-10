@@ -16,7 +16,7 @@ AS BEGIN
    DECLARE @lastMonth   INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
    DECLARE @tranStatus  TINYINT  = 10; --申請狀態 => 10: 申請中
    DECLARE @itemType    TINYINT  = 10; --項目類別 => 10: 藥庫
-   DECLARE @isComplexIn BIT      = 1 --是否廠商協助直入 => 1: 直入
+   DECLARE @isComplexIn BIT      = 1;  --是否廠商協助直入 => 1: 直入
   
    SELECT [medCode]            = c.MedCode,
           [drugCode]           = a.DrugCode,     
