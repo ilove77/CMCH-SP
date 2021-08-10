@@ -26,7 +26,7 @@ AS BEGIN
           [buyQty]             = a.DemandQty, 
           [onWayQty]           = [fn].[getDrugOnWayQty](a.SupplyStock, c.DrugCode),
           [stockTotalQty]      = [fn].[getDrugStockTotalQty]('DrugStock', a.SupplyStock, b.DrugCode),
-          [stockTotalGrantQty] = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth),   
+          [stockMonthQty]      = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth),   
           [unitName]           = [fn].[getUnitBasicName](c.ChargeUnit),           
           [demandStockName]    = [fn].[getDepartShortName](a.DemandStock)           
      FROM [dbo].[DrugDemand]    AS a,
