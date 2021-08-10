@@ -25,8 +25,7 @@ AS BEGIN
            [onWayQty]              = [fn].[getDrugOnWayQty](a.StockNo, b.DrugCode),                   
            [unitName]              = [fn].[getUnitBasicName](b.ChargeUnit),                           
            [stockTotalQty]         = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, b.DrugCode), 
-           [totalInStockGrantQty]  = [fn].[getDrugStockInQty]('DrugStock', a.stockNo, b.drugCode, @lastMonth), 
-           [totalOutStockGrantQty] = [fn].[getDrugStockOutQty]('DrugStock', a.stockNo, b.drugCode, @lastMonth)
+           [stockMonthQty]         = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth)  
       FROM DrugStockMt   AS a,
            DrugBasic     AS b,
            PurchaseBasic AS c
