@@ -6,8 +6,7 @@ GO
 --- 校閱人員：孫培然
 --- 修訂日期：2021/06/29
 CREATE PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
-AS BEGIN
-   DECLARE @checkStatus     TINYINT     = JSON_VALUE(@params, '$.checkStatus');
+AS BEGIN 
    DECLARE @orgNo           CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
    DECLARE @purchaseNo      INT         = JSON_VALUE(@params, '$.purchaseNo');
    DECLARE @drugCode        INT         = JSON_VALUE(@params, '$.drugCode') ;
@@ -23,40 +22,34 @@ AS BEGIN
           b.DemandQty    AS [demandQty],
           b.PurchaseQty  AS [purchaseQty],
           b.GiftQty      AS [giftQty],
-          d.MedCode      AS [medCode],
+          c.MedCode      AS [medCode],
           b.DrugCode     AS [drugCode],
-          d.DrugName     AS [drugName],
-          a.OrgNo        AS [orgNo],
-          c.CheckNo      AS [checkNo],          
+          c.DrugName     AS [drugName],
+          a.OrgNo        AS [orgNo],      
           b.CheckQty     AS [checkQty],
           [fn].[getUnitBasicName](b.unit)  AS [unitName],
           [fn].[getShortName](b.InStockNo) AS [stockName]
      FROM [dbo].[DrugPurchaseMt] AS a,
           [dbo].[DrugPurchaseDt] AS b,
-          [dbo].[DrugChecking]   AS c,
-          [dbo].[DrugBasic]      AS d
+          [dbo].[DrugBasic]      AS c
     WHERE a.PurchaseTime   BETWEEN  @purchaseTime1   AND @purchaseTime2
       AND a.PurchaseStatus BETWEEN  @purchaseStatus1 AND @purchaseStatus2
       AND a.PurchaseNo     = [fn].[numberFilter](@purchaseNo, a.PurchaseNo)
       AND a.OrgNo          = [fn].[stringFilter](@orgNo, a.OrgNo)
-      AND b.DrugCode       = [fn].[numberFilter](@drugCode, b.DrugCode)
       AND b.PurchaseNo     = a.PurchaseNo
-      AND c.InStockNo      LIKE @stockNo
-      AND c.CheckStatus    = @checkStatus
-      AND c.PurchaseNo     = b.PurchaseNo
-      AND c.DrugCode       = b.DrugCode 
-      AND d.MedCode        = [fn].[stringFilter](@medCode, d.MedCode)
-      AND d.DrugCode       = b.DrugCode
-      AND d.StartTime     <= a.PurchaseTime
-      AND d.EndTime       >= a.PurchaseTime
-      FOR JSON PATH
+      AND b.DrugCode       = [fn].[numberFilter](@drugCode, b.DrugCode)     
+      AND b.InStockNo      LIKE @stockNo
+      AND c.MedCode        = [fn].[stringFilter](@medCode, c.MedCode)
+      AND c.DrugCode       = b.DrugCode
+      AND c.StartTime     <= a.PurchaseTime
+      AND c.EndTime       >= a.PurchaseTime
+    ORDER BY a.PurchaseNo
 END
 GO
 
 DECLARE @params NVARCHAR(max) =
 '
 {
-    "checkStatus": "10",
     "medCode": "",
     "drugCode": 0,
     "orgNo": "",
