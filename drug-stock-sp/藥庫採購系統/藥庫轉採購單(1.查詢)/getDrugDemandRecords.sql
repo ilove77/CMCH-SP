@@ -29,10 +29,10 @@ AS BEGIN
           [stockTotalGrantQty] = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth),   
           [unitName]           = [fn].[getUnitBasicName](c.ChargeUnit),           
           [demandStockName]    = [fn].[getDepartShortName](a.DemandStock)           
-     FROM DrugDemand    AS a,
-          DrugStockMt   AS b,
-          DrugBasic     AS c,
-          PurchaseBasic AS d
+     FROM [dbo].[DrugDemand]    AS a,
+          [dbo].[DrugStockMt]   AS b,
+          [dbo].[DrugBasic]     AS c,
+          [dbo].[PurchaseBasic] AS d
     WHERE a.SupplyStock = @stockNo
       AND a.TranStatus  = @tranStatus
       AND a.DrugCode    = [fn].[numberFilter](@drugCode, a.DrugCode)
