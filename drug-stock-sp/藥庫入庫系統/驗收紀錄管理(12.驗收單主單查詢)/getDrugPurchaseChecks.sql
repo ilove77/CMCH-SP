@@ -6,7 +6,7 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/06/29
-CREATE PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
+ALTER PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
 AS BEGIN 
    DECLARE @orgNo           CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
    DECLARE @purchaseNo      INT         = JSON_VALUE(@params, '$.purchaseNo');
@@ -34,11 +34,11 @@ AS BEGIN
           [dbo].[DrugPurchaseMt] AS b,
           [dbo].[DrugBasic]      AS c
     WHERE a.InStockNo      LIKE @stockNo
-      AND a.DrugCode       = [fn].[numberFilter](@drugCode, a.DrugCode) 
+      AND a.DrugCode       = [fn].[numberFilter](@drugCode, a.DrugCode)
+      AND a.PurchaseNo     = [fn].[numberFilter](@purchaseNo, a.PurchaseNo) 
       AND b.PurchaseNo     = a.PurchaseNo
       AND b.PurchaseTime   BETWEEN  @purchaseTime1   AND @purchaseTime2
-      AND b.PurchaseStatus BETWEEN  @purchaseStatus1 AND @purchaseStatus2
-      AND b.PurchaseNo     = [fn].[numberFilter](@purchaseNo, a.PurchaseNo)
+      AND b.PurchaseStatus BETWEEN  @purchaseStatus1 AND @purchaseStatus2 
       AND b.OrgNo          = [fn].[stringFilter](@orgNo, b.OrgNo)
       AND c.DrugCode       = a.DrugCode
       AND c.StartTime     <= b.PurchaseTime
