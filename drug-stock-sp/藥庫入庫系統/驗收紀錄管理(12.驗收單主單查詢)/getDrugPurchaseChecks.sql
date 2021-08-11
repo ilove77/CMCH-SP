@@ -6,7 +6,7 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/06/29
-ALTER PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
+CREATE PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
 AS BEGIN 
    DECLARE @orgNo           CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
    DECLARE @purchaseNo      INT         = JSON_VALUE(@params, '$.purchaseNo');
@@ -47,7 +47,6 @@ AS BEGIN
       AND c.StartTime     <= b.PurchaseTime
       AND c.EndTime       >= b.PurchaseTime
       AND c.MedCode        = [fn].[stringFilter](@medCode, c.MedCode)
-    ORDER BY a.PurchaseNo
       FOR JSON PATH
 END
 GO
