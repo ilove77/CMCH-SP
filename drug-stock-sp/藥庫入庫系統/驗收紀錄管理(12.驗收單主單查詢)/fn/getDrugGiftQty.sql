@@ -17,7 +17,7 @@ AS BEGIN
    SELECT @giftQty = SUM(ISNULL(a.CheckQty, 0))
      FROM [dbo].[DrugChecking] AS a
     WHERE a.PurchaseNo  = @purchaseNo
-	  AND a.DrugCode    = @drugCode
+	   AND a.DrugCode    = @drugCode
       AND a.CheckType   = @checkType
       AND a.CheckStatus BETWEEN @checkStatus1 AND @checkStatus2
    RETURN @giftQty
