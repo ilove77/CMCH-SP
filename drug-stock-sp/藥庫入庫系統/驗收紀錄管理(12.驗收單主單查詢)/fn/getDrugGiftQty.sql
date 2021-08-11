@@ -10,15 +10,17 @@ CREATE FUNCTION [fn].[getDrugGiftQty] (@purchaseNo INT, @drugCode INT)
 RETURNS INT
 AS BEGIN 
    DECLARE @giftQty      INT     = 0;
-   DECLARE @checkType    TINYINT = 20; --驗收類別 => 20: 贈品驗收
+   DECLARE @checkType1   TINYINT = 20; --驗收類別 => 20: 贈品驗收
+   DECLARE @checkType2   TINYINT = 30; --驗收類別 => 30: 樣品驗收
    DECLARE @checkStatus1 TINYINT = 10; --驗收狀態 => 10: 匯入
    DECLARE @checkStatus2 TINYINT = 30; --驗收狀態 => 30: 過帳入庫
 
    SELECT @giftQty = SUM(ISNULL(a.CheckQty, 0))
      FROM [dbo].[DrugChecking] AS a
     WHERE a.PurchaseNo  = @purchaseNo
-	  AND a.DrugCode    = @drugCode
-      AND a.CheckType   = @checkType
+      AND a.DrugCode    = @drugCode
+      AND a.CheckType   BETWEEN @checkType1   AND @checkType2
       AND a.CheckStatus BETWEEN @checkStatus1 AND @checkStatus2
    RETURN @giftQty
 END
+

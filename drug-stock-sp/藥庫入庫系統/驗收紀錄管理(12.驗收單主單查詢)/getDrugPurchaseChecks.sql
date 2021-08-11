@@ -18,18 +18,21 @@ AS BEGIN
    DECLARE @purchaseStatus1 TINYINT     = 10;
    DECLARE @purchaseStatus2 TINYINT     = 69;
    
-   SELECT [purchaseNo]   = a.PurchaseNo,     
-          [purchaseTime] = b.PurchaseTime,      
-          [demandQty]    = a.DemandQty,    
-          [purchaseQty]  = a.PurchaseQty,   
-          [giftQty]      = a.GiftQty,      
-          [medCode]      = c.MedCode,      
-          [drugCode]     = a.DrugCode,      
-          [drugName]     = c.DrugName,      
-          [orgNo]        = b.OrgNo,               
-          [checkQty]     = a.CheckQty,      
-          [unitName]     = [fn].[getUnitBasicName](a.unit),
-          [stockName]    = [fn].[getShortName](a.InStockNo)
+   SELECT [purchaseNo]     = a.PurchaseNo,     
+          [purchaseTime]   = b.PurchaseTime,      
+          [remQty]         = a.DemandQty,    
+          [purchaseQty]    = a.PurchaseQty,   
+          [giftQty]        = a.GiftQty,
+          [checkQty]       = a.CheckQty,       
+          [medCode]        = c.MedCode,      
+          [drugCode]       = a.DrugCode,      
+          [drugName]       = c.DrugName,      
+          [orgNo]          = b.OrgNo,
+          [orgName]        = [fn].[getOrgName](b.orgNo),              
+          [unitName]       = [fn].[getUnitBasicName](a.unit),
+          [stockName]      = [fn].[getShortName](a.InStockNo),
+          [remPurchaseQty] = [fn].[getDrugPurchaseQty](a.PurchaseNo, a.DrugCode),
+          [remGiftQty]     = [fn].[getDrugGiftQty](a.PurchaseNo, a.DrugCode)
      FROM [dbo].[DrugPurchaseDt] AS a,
           [dbo].[DrugPurchaseMt] AS b,
           [dbo].[DrugBasic]      AS c
