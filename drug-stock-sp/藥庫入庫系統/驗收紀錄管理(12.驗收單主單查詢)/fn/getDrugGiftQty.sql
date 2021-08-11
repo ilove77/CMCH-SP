@@ -23,4 +23,3 @@ AS BEGIN
       AND a.CheckStatus BETWEEN @checkStatus1 AND @checkStatus2
    RETURN @giftQty
 END
-
