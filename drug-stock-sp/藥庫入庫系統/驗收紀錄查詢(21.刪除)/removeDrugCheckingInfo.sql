@@ -25,7 +25,7 @@ AS BEGIN
 
          EXEC [dbo].[removeInvoiceRecord] @params
          
-         EXEC [dbo].[removeInvoiceDiscount] @params
+         EXEC [dbo].[removeInvoiceDiscounts] @params
 
          IF (@tranCount = 0) COMMIT TRAN;
    END TRY
