@@ -108,3 +108,26 @@ AS BEGIN
    END CATCH
    RETURN @tranNo
 END
+GO
+
+DECLARE @params NVARCHAR(max) = 
+'
+{
+    "tranNo": 1996589,
+    "demandNo": 4,
+    "tranType": 2,
+    "drugCode": 3675,
+    "inStockNo": "1P11",
+    "inStockUser": 25,
+    "inStockTime": "2021-04-06 14:15:00",
+    "outStockNo": "1A8D",
+    "outStockUser": 30,
+    "outStockTime": "2021-07-05 17:15:00",
+    "stockQty": 40,
+    "batchNo": 14752,
+    "systemUser": 37029
+}
+';
+
+EXEC [dbo].[setDrugTranRecord] @params
+GO
