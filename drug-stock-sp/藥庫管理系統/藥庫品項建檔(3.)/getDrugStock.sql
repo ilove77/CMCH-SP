@@ -41,7 +41,8 @@ AS BEGIN
           a.InvTime      AS [invTime],
           a.InvQty       AS [invQty],
           a.SystemUser   AS [systemUser],
-          a.SystemTime   AS [systemTime]
+          a.SystemTime   AS [systemTime],
+          [fn].[getDrugStockTotalQty]('drugStock', a.StockNo, a.DrugCode)
      FROM [dbo].[DrugStockMt] AS a
     WHERE a.StockNo  = @stockNo
       AND a.DrugCode = @drugCode
