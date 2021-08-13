@@ -14,7 +14,7 @@ AS BEGIN
    DECLARE @procedureName VARCHAR(30)    = 'setDrugPurchaseDt';
 
    BEGIN TRY
-         MERGE INTO [dbo].[DrugPurchaseDt] AS a
+         MERGE INTO [dbo].[DrugPurchaseDt] AS t
          USING ( SELECT *
                    FROM OPENJSON(@params)       
                    WITH ( PurchaseNo   INT      '$.purchaseNo',
@@ -33,76 +33,76 @@ AS BEGIN
                           ClearReason  TINYINT  '$.clearReason', 
                           SystemUser   INT      '$.systemUser'    
                         )
-               ) AS b (
-                       PurchaseNo, 
-                       DrugCode, 
-                       InStockNo, 
-                       DemandQty, 
-                       PurchaseQty, 
-                       GiftQty, 
-                       CheckQty, 
-                       Unit, 
-                       FollowTimes, 
-                       IsDelay, 
-                       IsDirectlyIn, 
-                       ClearUser, 
-                       ClearDate, 
-                       ClearReason, 
-                       SystemUser
-                      )  
-            ON (a.PurchaseNo = b.PurchaseNo AND a.DrugCode = b.DrugCode)    
+                 ) AS s (
+                          PurchaseNo, 
+                          DrugCode, 
+                          InStockNo, 
+                          DemandQty, 
+                          PurchaseQty, 
+                          GiftQty, 
+                          CheckQty, 
+                          Unit, 
+                          FollowTimes, 
+                          IsDelay, 
+                          IsDirectlyIn, 
+                          ClearUser, 
+                          ClearDate, 
+                          ClearReason, 
+                          SystemUser
+                        )  
+            ON (t.PurchaseNo = s.PurchaseNo AND t.DrugCode = s.DrugCode)    
          WHEN MATCHED THEN  
               UPDATE SET 
-                     a.InStockNo    = b.InStockNo,   
-                     a.DemandQty    = b.DemandQty,     
-                     a.PurchaseQty  = b.PurchaseQty, 
-                     a.GiftQty      = b.GiftQty,       
-                     a.CheckQty     = b.CheckQty,    
-                     a.Unit         = b.Unit,          
-                     a.FollowTimes  = b.FollowTimes,    
-                     a.IsDelay      = b.IsDelay,       
-                     a.IsDirectlyIn = b.IsDirectlyIn,
-                     a.ClearUser    = b.ClearUser,   
-                     a.ClearDate    = b.ClearDate,   
-                     a.ClearReason  = b.ClearReason, 
-                     a.SystemUser   = b.SystemUser,
-                     a.SystemTime   = @SystemTime       
+                    t.InStockNo    = ISNULL(s.InStockNo, t.InStockNo),      
+                    t.DemandQty    = ISNULL(s.DemandQty, t.DemandQty),     
+                    t.PurchaseQty  = ISNULL(s.PurchaseQty, t.PurchaseQty), 
+                    t.GiftQty      = ISNULL(s.GiftQty, t.GiftQty),       
+                    t.CheckQty     = ISNULL(s.CheckQty, t.CheckQty),    
+                    t.Unit         = ISNULL(s.Unit, t.Unit),          
+                    t.FollowTimes  = ISNULL(s.FollowTimes, t.FollowTimes),    
+                    t.IsDelay      = ISNULL(s.IsDelay, t.IsDelay),       
+                    t.IsDirectlyIn = ISNULL(s.IsDirectlyIn, t.IsDirectlyIn),
+                    t.ClearUser    = ISNULL(s.ClearUser, t.ClearUser),   
+                    t.ClearDate    = ISNULL(s.ClearDate, t.ClearDate),   
+                    t.ClearReason  = ISNULL(s.ClearReason, t.ClearReason), 
+                    t.SystemUser   = s.SystemUser,
+                    t.SystemTime   = @SystemTime       
          WHEN NOT MATCHED THEN
               INSERT (
-                      PurchaseNo,  
-                      DrugCode,   
-                      InStockNo,   
-                      DemandQty,   
-                      PurchaseQty, 
-                      GiftQty,     
-                      CheckQty,    
-                      Unit,        
-                      FollowTimes, 
-                      IsDelay,     
-                      IsDirectlyIn,
-                      ClearUser,   
-                      ClearDate,   
-                      ClearReason, 
-                      SystemUser,
-                      SystemTime  
+                       PurchaseNo,  
+                       DrugCode,   
+                       InStockNo,   
+                       DemandQty,   
+                       PurchaseQty, 
+                       GiftQty,     
+                       CheckQty,    
+                       Unit,        
+                       FollowTimes, 
+                       IsDelay,     
+                       IsDirectlyIn,
+                       ClearUser,   
+                       ClearDate,   
+                       ClearReason, 
+                       SystemUser,
+                       SystemTime  
                      )
               VALUES (
-                      b.PurchaseNo,  
-                      b.DrugCode,    
-                      b.InStockNo,   
-                      b.DemandQty,   
-                      b.PurchaseQty, 
-                      b.GiftQty,     
-                      b.CheckQty,     
-                      b.Unit,        
-                      b.FollowTimes, 
-                      b.IsDelay,      
-                      b.IsDirectlyIn,
-                      b.ClearUser,   
-                      b.ClearDate,   
-                      b.ClearReason, 
-                      b.SystemUser,
-                      @systemTime  
+                       s.PurchaseNo,  
+                       s.DrugCode,    
+                       s.InStockNo,   
+                       s.DemandQty,   
+                       s.PurchaseQty, 
+                       s.GiftQty,     
+                       s.CheckQty,     
+                       s.Unit,        
+                       s.FollowTimes, 
+                       s.IsDelay,      
+                       s.IsDirectlyIn,
+                       s.ClearUser,   
+                       s.ClearDate,   
+                       s.ClearReason, 
+                       s.SystemUser,
+                       @systemTime  
                      );                 
    END TRY
    BEGIN CATCH
@@ -111,6 +111,7 @@ AS BEGIN
          THROW;
    END CATCH
 END
+GO
 
 DECLARE @params NVARCHAR(MAX) = 
 '
