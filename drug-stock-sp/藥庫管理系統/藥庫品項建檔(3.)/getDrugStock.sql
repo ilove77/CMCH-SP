@@ -6,43 +6,43 @@ GO
 --- 編訂人員: 蔡易志
 --- 校閱人員: 孫培然
 --- 修訂日期: 2021/07/19
-ALTER PROCEDURE [dbo].[getDrugStock](@params NVARCHAR(MAX))
+CREATE PROCEDURE [dbo].[getDrugStock](@params NVARCHAR(MAX))
 AS BEGIN 
    DECLARE @stockNo  CHAR(04) = JSON_VALUE(@params, '$.stockNo');
    DECLARE @drugCode INT      = JSON_VALUE(@params, '$.drugCode');
 
-   SELECT a.StockNo      AS [stockNo],
-          a.DrugCode     AS [drugCode],
-          a.StockUnit    AS [stockUnit],
-          a.StockRatio   AS [stockRatio],
-          a.PackageQty   AS [packageQty],
-          a.PurchaseDays AS [purchaseDays],
-          a.WarnDays     AS [warnDays],
-          a.PurchaseQty  AS [purchaseQty],
-          a.ReorderPoint AS [reorderPoint],
-          a.SafetyQty    AS [safetyQty],
-          a.TotalQty     AS [totalQty],
-          a.MaxQty       AS [maxQty],
-          a.SupplyType   AS [supplyType],
-          a.DrugType     AS [drugType],
-          a.KeepType     AS [keepType],
-          a.PurchaseType AS [purchaseType],
-          a.InvType      AS [invType],
-          a.StorageNo    AS [storageNo],
-          a.SupplyStock  AS [supplyStock],
-          a.IsComplexIn  AS [isComplexIn],
-          a.IsInvList    AS [isInvList],
-          a.StartTime    AS [startTime],
-          a.EndTime      AS [endTime],
-          a.LastTime     AS [lastTime],
-          a.LastQty      AS [lastQty],
-          a.MonthTime    AS [monthTime],
-          a.MonthQty     AS [monthQty],
-          a.InvTime      AS [invTime],
-          a.InvQty       AS [invQty],
-          a.SystemUser   AS [systemUser],
-          a.SystemTime   AS [systemTime],
-          [fn].[getDrugStockTotalQty]('drugStock', a.StockNo, a.DrugCode)
+   SELECT [stockNo]       = a.StockNo,
+          [drugCode]      = a.DrugCode,
+          [stockUnit]     = a.StockUnit,
+          [stockRatio]    = a.StockRatio,
+          [packageQty]    = a.PackageQty,
+          [purchaseDays]  = a.PurchaseDays,
+          [warnDays]      = a.WarnDays,
+          [purchaseQty]   = a.PurchaseQty,
+          [reorderPoint]  = a.ReorderPoint,
+          [safetyQty]     = a.SafetyQty,
+          [totalQty]      = a.TotalQty,
+          [maxQty]        = a.MaxQty,
+          [supplyType]    = a.SupplyType,
+          [drugType]      = a.DrugType,
+          [keepType]      = a.KeepType,
+          [purchaseType]  = a.PurchaseType,
+          [invType]       = a.InvType,
+          [storageNo]     = a.StorageNo,
+          [supplyStock]   = a.SupplyStock,
+          [isComplexIn]   = a.IsComplexIn,
+          [isInvList]     = a.IsInvList,
+          [startTime]     = a.StartTime,
+          [endTime]       = a.EndTime,
+          [lastTime]      = a.LastTime,
+          [lastQty]       = a.LastQty,
+          [monthTime]     = a.MonthTime,
+          [monthQty]      = a.MonthQty,
+          [invTime]       = a.InvTime,
+          [invQty]        = a.InvQty,
+          [systemUser]    = a.SystemUser,
+          [systemTime]    = a.SystemTime,
+          [stockTotalQty] = [fn].[getDrugStockTotalQty]('drugStock', a.StockNo, a.DrugCode)
      FROM [dbo].[DrugStockMt] AS a
     WHERE a.StockNo  = @stockNo
       AND a.DrugCode = @drugCode
