@@ -88,7 +88,7 @@ DECLARE @params NVARCHAR(max) =
     "tranNo": 726521,
     "demandNo": 616393,
     "supplyQty": 5000,
-    "supplyUser": 9,
+    "supplyUser": 37029,
     "supplyTime": "2021-08-13 08:06:26.000",
     "receiveUser": 0,
     "receiveTime": "2999-12-31 00:00:00.000",
