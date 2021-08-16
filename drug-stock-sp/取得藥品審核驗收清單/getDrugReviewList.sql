@@ -13,12 +13,12 @@ AS BEGIN
    DECLARE @checkStatus1 TINYINT      = 30;
    DECLARE @checkStatus2 TINYINT      = 79;
 
-   SELECT [inStockNo] = a.InStockNo,
-          [checkNo]   = a.CheckNo,
-          [checkTime] = a.CheckTime,
-          [medCode]   = b.MedCode,
-          [drugName]  = b.GenericName1,
-          [highAlert] = [fn].[getDrugHighAlert](b.MedCode,a.CheckTime),
+   SELECT [inStockNo]     = a.InStockNo,
+          [checkNo]       = a.CheckNo,
+          [checkTime]     = a.CheckTime,
+          [medCode]       = b.MedCode,
+          [drugName]      = b.GenericName1,
+          [highAlert]     = [fn].[getDrugHighAlert](b.MedCode,a.CheckTime),
           [drugTrialDate] = [fn].[getDrugTrialDate](a.CheckNo)
      FROM [dbo].[DrugChecking] AS a,
           [dbo].[DrugBasic]    AS b
