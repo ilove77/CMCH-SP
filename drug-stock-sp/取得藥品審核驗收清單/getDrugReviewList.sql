@@ -14,10 +14,12 @@ AS BEGIN
    DECLARE @checkStatus2 TINYINT      = 79;
 
    SELECT [inStockNo] = a.InStockNo,
-          [checkNo]   = a.CheckNo,     
-          [checkTime] = a.CheckTime,   
-          [medCode]   = b.MedCode,     
-          [drugName]  = b.GenericName1
+          [checkNo]   = a.CheckNo,
+          [checkTime] = a.CheckTime,
+          [medCode]   = b.MedCode,
+          [drugName]  = b.GenericName1,
+          [highAlert] = [fn].[getDrugHighAlert](b.MedCode,a.CheckTime),
+          [drugTrialDate] = [fn].[getDrugTrialDate](a.CheckNo)
      FROM [dbo].[DrugChecking] AS a,
           [dbo].[DrugBasic]    AS b
     WHERE a.InStockNo   LIKE    @inStockNo
@@ -26,6 +28,7 @@ AS BEGIN
       AND b.DrugCode    = a.DrugCode   
       AND b.StartTime  <= a.CheckTime
       AND b.EndTime    >= a.CheckTime
+    ORDER BY b.HighAlert DESC, a.CheckTime
       FOR JSON PATH
 END
 GO
@@ -33,9 +36,10 @@ GO
 DECLARE @params NVARCHAR(max) =
 '
 {
-    "checkDate": "2021-06-19",
-    "instockNo": "1%"
+    "checkDate": "2021-08-16",
+    "inStockNo": "1%"
 }
 '
+
 EXEC [dbo].[getDrugReviewList] @params
 GO

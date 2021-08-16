@@ -42,6 +42,7 @@ AS BEGIN
           [invQty]        = a.InvQty,
           [systemUser]    = a.SystemUser,
           [systemTime]    = a.SystemTime,
+          [onWayQty]      = [fn].[getDrugOnWayQty](a.stockNo, a.DrugCode),
           [stockTotalQty] = [fn].[getDrugStockTotalQty]('drugStock', a.StockNo, a.DrugCode)
      FROM [dbo].[DrugStockMt] AS a
     WHERE a.StockNo  = @stockNo
