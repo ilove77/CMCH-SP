@@ -6,7 +6,7 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/06/29
-CREATE PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
+ALTER PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
 AS BEGIN 
    DECLARE @orgNo           CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
    DECLARE @purchaseNo      INT         = JSON_VALUE(@params, '$.purchaseNo');
@@ -29,6 +29,7 @@ AS BEGIN
           [drugName]       = c.DrugName,      
           [orgNo]          = b.OrgNo,
           [deliveryTime]   = b.DeliveryTime,
+          [isDelay]        = a.IsDelay,
           [orgName]        = [fn].[getOrgName](b.orgNo),              
           [unitName]       = [fn].[getUnitBasicName](a.unit),
           [stockName]      = [fn].[getShortName](a.InStockNo),
