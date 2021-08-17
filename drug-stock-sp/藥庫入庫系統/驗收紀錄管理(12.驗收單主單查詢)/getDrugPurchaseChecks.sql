@@ -18,16 +18,6 @@ AS BEGIN
    DECLARE @purchaseStatus1 TINYINT     = 10;
    DECLARE @purchaseStatus2 TINYINT     = 69;
    
-   DECLARE @orgNo           CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
-   DECLARE @purchaseNo      INT         = JSON_VALUE(@params, '$.purchaseNo');
-   DECLARE @drugCode        INT         = JSON_VALUE(@params, '$.drugCode') ;
-   DECLARE @medCode         CHAR(08)    = JSON_VALUE(@params, '$.medCode');
-   DECLARE @stockNo         VARCHAR(04) = JSON_VALUE(@params, '$.stockNo');
-   DECLARE @purchaseTime1   DATETIME    = [fn].[getDateMinTime](JSON_VALUE(@params, '$.purchaseDate1'));
-   DECLARE @purchaseTime2   DATETIME    = [fn].[getDateMaxTime](JSON_VALUE(@params, '$.purchaseDate2'));
-   DECLARE @purchaseStatus1 TINYINT     = 10;
-   DECLARE @purchaseStatus2 TINYINT     = 69;
-   
    SELECT [purchaseNo]     = a.PurchaseNo,     
           [purchaseTime]   = b.PurchaseTime,      
           [remQty]         = a.DemandQty,    
