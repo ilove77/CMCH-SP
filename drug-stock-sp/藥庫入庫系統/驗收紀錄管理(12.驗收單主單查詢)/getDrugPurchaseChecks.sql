@@ -19,20 +19,21 @@ AS BEGIN
    DECLARE @purchaseStatus2 TINYINT     = 69;
    
    SELECT [purchaseNo]     = a.PurchaseNo,     
-          [purchaseTime]   = b.PurchaseTime,
-          [medCode]        = c.MedCode,      
-          [drugCode]       = a.DrugCode,      
-          [drugName]       = c.DrugName,      
-          [orgNo]          = b.OrgNo,      
+          [purchaseTime]   = b.PurchaseTime,      
           [remQty]         = a.DemandQty,    
           [purchaseQty]    = a.PurchaseQty,   
           [giftQty]        = a.GiftQty,
           [checkQty]       = a.CheckQty,       
-          [remPurchaseQty] = [fn].[getDrugPurchaseQty](a.PurchaseNo, a.DrugCode),
-          [remGiftQty]     = [fn].[getDrugGiftQty](a.PurchaseNo, a.DrugCode),
+          [medCode]        = c.MedCode,      
+          [drugCode]       = a.DrugCode,      
+          [drugName]       = c.DrugName,      
+          [orgNo]          = b.OrgNo,
+          [isDelay]        = a.IsDelay,
           [orgName]        = [fn].[getOrgName](b.orgNo),              
           [unitName]       = [fn].[getUnitBasicName](a.unit),
-          [stockName]      = [fn].[getShortName](a.InStockNo)
+          [stockName]      = [fn].[getShortName](a.InStockNo),
+          [remPurchaseQty] = [fn].[getDrugPurchaseQty](a.PurchaseNo, a.DrugCode),
+          [remGiftQty]     = [fn].[getDrugGiftQty](a.PurchaseNo, a.DrugCode)
      FROM [dbo].[DrugPurchaseDt] AS a,
           [dbo].[DrugPurchaseMt] AS b,
           [dbo].[DrugBasic]      AS c
@@ -58,10 +59,11 @@ DECLARE @params NVARCHAR(max) =
     "drugCode": 0,
     "orgNo": "",
     "purchaseNo": 0,
-    "purchaseDate1": "2021-06-21",
-    "purchaseDate2": "2021-06-28",
+    "purchaseDate1": "2021-08-10",
+    "purchaseDate2": "2021-08-17",
     "stockNo": "1%"
 }
 '
+
 EXEC [dbo].[getDrugPurchaseChecks] @params
 GO
