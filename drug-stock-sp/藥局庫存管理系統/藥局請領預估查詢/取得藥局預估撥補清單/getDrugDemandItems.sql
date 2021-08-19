@@ -12,30 +12,49 @@ AS BEGIN
    DECLARE @demandType  TINYINT  = 60; --需求類別 => 60: 自動撥補
    DECLARE @currentTime DATETIME = GETDATE();
 
+   WITH filterItems AS (
+        SELECT [StockNo]      = a.StockNo,
+               [DrugCode]     = a.DrugCode,                 
+               [SafetyQty]    = a.SafetyQty, 
+               [UnarrivalQty] = [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode) + a.TotalQty,
+               [ConsumeQty]   = [fn].[getDrugConsumeDemandQty](a.StockNo, a.DrugCode, @demandType),
+               [DeliverQty]   = [fn].[getDrugDeliverQty](a.MaxQty, a.TotalQty, a.PackageQty) 
+          FROM [dbo].[DrugStockMt] AS a,
+               [dbo].[DrugBasic]   AS b
+         WHERE a.StockNo    = @stockNo
+           AND a.StartTime <= @currentTime
+           AND a.EndTime   >= @currentTime
+           AND b.DrugCode   = a.DrugCode
+           AND b.StartTime <= @currentTime
+           AND b.EndTime   >= @currentTime
+   )
    SELECT [stockNo]        = a.StockNo,   
-          [medCode]        = b.MedCode,             
-          [drugCode]       = b.DrugCode,
-          [drugName]       = b.DrugName,
+          [medCode]        = c.MedCode,             
+          [drugCode]       = a.DrugCode,
+          [drugName]       = c.DrugName,
           [safetyQty]      = a.SafetyQty, 
-          [maxQty]         = a.MaxQty, 
-          [stockQty]       = a.totalQty,
-          [packageQty]     = a.PackageQty,
-          [chargeUnitName] = [fn].[getUnitName](b.ChargeUnit),
-          [stockUnitName]  = [fn].[getUnitName](a.StockUnit),
-          [unarrivalQty]   = [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode),
-          [consumeQty]     = [fn].[getDrugConsumeDemandQty](a.StockNo, a.DrugCode, @demandType) 
-     FROM [dbo].[DrugStockMt] AS a,
-          [dbo].[DrugBasic]   AS b
-    WHERE a.StockNo    = @stockNo
-      AND a.TotalQty   < a.SafetyQty
-      AND a.SafetyQty >= [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode) + a.TotalQty
-      AND a.StartTime <= @currentTime
-      AND a.EndTime   >= @currentTime
-      AND b.DrugCode   = a.DrugCode
-      AND b.StartTime <= @currentTime
-      AND b.EndTime   >= @currentTime
-      AND [fn].[getDrugConsumeDemandQty](a.StockNo, a.DrugCode, 60)   <> 0  
-      AND [fn].[getDrugDeliverQty](a.MaxQty, a.TotalQty, a.PackageQty) > 0
+          [maxQty]         = b.MaxQty, 
+          [stockQty]       = b.totalQty,
+          [packageQty]     = b.PackageQty,
+          [unarrivalQty]   = a.UnarrivalQty,
+          [consumeQty]     = a.ConsumeQty,
+          [deliverQty]     = a.DeliverQty,
+          [chargeUnitName] = [fn].[getUnitName](c.ChargeUnit),
+          [stockUnitName]  = [fn].[getUnitName](b.StockUnit)
+     FROM [filterItems]       AS a,
+          [dbo].[DrugStockMt] AS b,
+          [dbo].[DrugBasic]   AS c
+    WHERE a.ConsumeQty <> 0
+      AND a.DeliverQty  > 0
+      AND b.StockNo     = a.StockNo
+      AND b.DrugCode    = a.DrugCode
+      AND b.SafetyQty  >= a.UnarrivalQty 
+      AND b.TotalQty    < a.SafetyQty  
+      AND b.StartTime  <= @currentTime
+      AND b.EndTime    >= @currentTime
+      AND c.DrugCode    = a.DrugCode
+      AND c.StartTime  <= @currentTime
+      AND c.EndTime    >= @currentTime
       FOR JSON PATH
 END
 GO
