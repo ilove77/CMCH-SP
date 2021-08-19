@@ -14,19 +14,15 @@ AS BEGIN
 
    WITH filterItems AS (
         SELECT [StockNo]      = a.StockNo,
-               [DrugCode]     = a.DrugCode,                 
-               [SafetyQty]    = a.SafetyQty, 
+               [DrugCode]     = a.DrugCode,   
+               [SafetyQty]    = a.SafetyQty,
                [UnarrivalQty] = [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode) + a.TotalQty,
                [ConsumeQty]   = [fn].[getDrugConsumeDemandQty](a.StockNo, a.DrugCode, @demandType),
                [DeliverQty]   = [fn].[getDrugDeliverQty](a.MaxQty, a.TotalQty, a.PackageQty) 
-          FROM [dbo].[DrugStockMt] AS a,
-               [dbo].[DrugBasic]   AS b
+          FROM [dbo].[DrugStockMt] AS a
          WHERE a.StockNo    = @stockNo
            AND a.StartTime <= @currentTime
-           AND a.EndTime   >= @currentTime
-           AND b.DrugCode   = a.DrugCode
-           AND b.StartTime <= @currentTime
-           AND b.EndTime   >= @currentTime
+           AND a.EndTime   >= @currentTime       
    )
    SELECT [stockNo]        = a.StockNo,   
           [medCode]        = c.MedCode,             
