@@ -12,7 +12,7 @@ AS BEGIN
    DECLARE @demandType  TINYINT  = 60; --需求類別 => 60: 自動撥補
    DECLARE @currentTime DATETIME = GETDATE();
 
-   WITH filterItems AS (
+   WITH DrugStock AS (
         SELECT [StockNo]      = a.StockNo,
                [DrugCode]     = a.DrugCode,   
                [SafetyQty]    = a.SafetyQty,
@@ -36,10 +36,10 @@ AS BEGIN
           [deliverQty]     = a.DeliverQty,
           [chargeUnitName] = [fn].[getUnitName](c.ChargeUnit),
           [stockUnitName]  = [fn].[getUnitName](b.StockUnit)
-     FROM [filterItems]       AS a,
+     FROM [DrugStock]         AS a,
           [dbo].[DrugStockMt] AS b,
           [dbo].[DrugBasic]   AS c
-    WHERE a.ConsumeQty <> 0
+    WHERE a.ConsumeQty  < 0
       AND a.DeliverQty  > 0
       AND b.StockNo     = a.StockNo
       AND b.DrugCode    = a.DrugCode
