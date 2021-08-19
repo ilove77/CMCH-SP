@@ -36,7 +36,6 @@ AS BEGIN
           [maxQty]         = b.MaxQty, 
           [stockQty]       = b.totalQty,
           [packageQty]     = b.PackageQty,
-          [unarrivalQty]   = a.UnarrivalQty,
           [consumeQty]     = a.ConsumeQty,
           [deliverQty]     = a.DeliverQty,
           [chargeUnitName] = [fn].[getUnitName](c.ChargeUnit),
