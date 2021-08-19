@@ -39,7 +39,7 @@ AS BEGIN
      FROM [DrugStock]         AS a,
           [dbo].[DrugStockMt] AS b,
           [dbo].[DrugBasic]   AS c
-    WHERE a.ConsumeQty  < 0
+    WHERE a.ConsumeQty <> 0
       AND a.DeliverQty  > 0
       AND b.StockNo     = a.StockNo
       AND b.DrugCode    = a.DrugCode
