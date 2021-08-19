@@ -1,18 +1,23 @@
 USE [HealthResource]
 GO
+/****** Object:  StoredProcedure [dbo].[getDrugDemandItems]    Script Date: 2021/8/19 下午 05:26:21 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
 --- 程序名稱：getDrugDemandItems
 --- 程序說明：取得藥局預估撥補清單
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/07/13
-CREATE PROCEDURE [dbo].[getDrugDemandItems](@params NVARCHAR(MAX))
+ALTER PROCEDURE [dbo].[getDrugDemandItems](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @stockNo     CHAR(04) = JSON_VALUE(@params, '$.stockNo');
    DECLARE @demandType  TINYINT  = 60; --需求類別 => 60: 自動撥補
    DECLARE @currentTime DATETIME = GETDATE();
 
-   WITH DrugStock AS (
+   WITH DrugStockItems AS (
         SELECT [StockNo]      = a.StockNo,
                [DrugCode]     = a.DrugCode,   
                [SafetyQty]    = a.SafetyQty,
@@ -36,7 +41,7 @@ AS BEGIN
           [deliverQty]     = a.DeliverQty,
           [chargeUnitName] = [fn].[getUnitName](c.ChargeUnit),
           [stockUnitName]  = [fn].[getUnitName](b.StockUnit)
-     FROM [DrugStock]         AS a,
+     FROM [DrugStockItems]    AS a,
           [dbo].[DrugStockMt] AS b,
           [dbo].[DrugBasic]   AS c
     WHERE a.ConsumeQty <> 0
@@ -52,14 +57,3 @@ AS BEGIN
       AND c.EndTime    >= @currentTime
       FOR JSON PATH
 END
-GO
-
-DECLARE @params NVARCHAR(MAX) =
-'
-{
-   "stockNo": "1P1A"
-}
-';
-
-EXEC [dbo].[getDrugDemandItems] @params
-GO
