@@ -14,7 +14,7 @@ AS BEGIN
    DECLARE @procedureName VARCHAR(30)    = 'setDrugStockDt';
 
    BEGIN TRY
-         MERGE INTO [dbo].[drugStockDt] AS a
+         MERGE INTO [dbo].[drugStockDt] AS t
          USING ( 
                  SELECT *
                    FROM OPENJSON(@params)          
@@ -25,29 +25,35 @@ AS BEGIN
                           StockQty   INT      '$.stockQty',
                           SystemUser INT      '$.systemUser'
                         )
-               ) AS b (StockNo, DrugCode, BatchNo, StockQty, SystemUser)    
-            ON (a.StockNo = b.StockNo AND a.DrugCode = b.DrugCode AND a.BatchNo = b.BatchNo)    
+                 ) AS s (
+                          StockNo,
+                          DrugCode, 
+                          BatchNo, 
+                          StockQty, 
+                          SystemUser
+                        )    
+            ON (t.StockNo = s.StockNo AND t.DrugCode = s.DrugCode AND t.BatchNo = s.BatchNo)    
          WHEN MATCHED THEN 
               UPDATE SET   
-                     a.StockQty   = b.StockQty, 
-                     a.SystemUser = b.SystemUser,
-                     a.SystemTime = @systemTime
+                     t.StockQty   = ISNULL(s.StockQty, t.StockQty),
+                     t.SystemUser = s.SystemUser,
+                     t.SystemTime = @systemTime
          WHEN NOT MATCHED THEN
               INSERT (
-                      StockNo, 
-                      DrugCode, 
-                      BatchNo, 
-                      StockQty, 
-                      SystemUser, 
-                      SystemTime
+                       StockNo, 
+                       DrugCode, 
+                       BatchNo, 
+                       StockQty, 
+                       SystemUser, 
+                       SystemTime
                      )
               VALUES (
-                      b.StockNo, 
-                      b.DrugCode, 
-                      b.BatchNo, 
-                      b.StockQty, 
-                      b.SystemUser, 
-                      @systemTime
+                       s.StockNo, 
+                       s.DrugCode, 
+                       s.BatchNo, 
+                       s.StockQty, 
+                       s.SystemUser, 
+                       @systemTime
                      );
 
    END TRY
