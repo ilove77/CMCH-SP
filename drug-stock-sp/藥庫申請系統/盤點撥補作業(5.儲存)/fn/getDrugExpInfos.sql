@@ -13,11 +13,11 @@ AS BEGIN
    
    SET @expInfos =
      (    
-	   SELECT [stockNo] = a.StockNo,  
-              [drugCode = a.DrugCode,
-              [batchNo] = a.BatchNo,  
-              [lotNo]   = b.LotNo,   
-              [expDate] = b.ExpDate,   
+       SELECT [stockNo]  = a.StockNo,  
+              [drugCode] = a.DrugCode,
+              [batchNo]  = a.BatchNo,  
+              [lotNo]    = b.LotNo,   
+              [expDate]  = b.ExpDate,   
               [stockQty] = a.StockQty 
          FROM [dbo].[DrugStockDt] a
          LEFT JOIN [dbo].[DrugBatch] b ON a.DrugCode = b.DrugCode AND a.BatchNo = b.BatchNo
