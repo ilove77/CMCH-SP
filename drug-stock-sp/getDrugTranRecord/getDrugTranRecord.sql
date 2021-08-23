@@ -13,7 +13,7 @@ AS BEGIN
    SELECT [tranNo]       = a.TranNo,
           [demandNo]     = a.DemandNo,
           [tranType]     = a.TranType,
-          [matCode]      = a.MatCode,
+          [drugCode]     = a.DrugCode,
           [inStockNo]    = a.InStockNo,
           [inStockUser]  = a.InStockUser,
           [inStockTime]  = a.InStockTime,
@@ -24,7 +24,7 @@ AS BEGIN
           [batchNo]      = a.BatchNo,
           [systemUser]   = a.SystemUser,
           [systemTime]   = a.SystemTime
-     FROM [dbo].[MatTranRecord] AS a
+     FROM [dbo].[DrugTranRecord] AS a
     WHERE a.TranNo = @tranNo
       FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
 END
@@ -33,7 +33,7 @@ GO
 DECLARE @params NVARCHAR(MAX) =
 '
 {
-  "tranNo": 1,
+  "tranNo": 5,
 }
 '
 ;
