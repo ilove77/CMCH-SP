@@ -33,7 +33,7 @@ GO
 DECLARE @params NVARCHAR(MAX) =
 '
 {
-  "tranNo": 5,
+  "tranNo": 5
 }
 '
 ;
