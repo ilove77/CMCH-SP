@@ -5,7 +5,7 @@ GO
 --- 程序說明：新增藥品交易記錄檔
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/08/13
+--- 修訂日期：2021/08/23
 ALTER PROCEDURE [dbo].[addDrugTranRecord](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @tranNo         INT;
@@ -71,3 +71,26 @@ AS BEGIN
    END CATCH
    RETURN @tranNo;
 END
+GO
+
+DECLARE @params NVARCHAR(MAX) =
+'
+{
+  "tranType": 27,
+  "drugCode": 3678,
+  "stockQty": 2,
+  "demandNo": 0,
+  "inStockNo": "1231",
+  "inStockUser": 1111,
+  "inStockTime": "2021-07-28 12:00",
+  "outStockNo": "111",
+  "outStockUser": 1111,
+  "outStockTime": "2021-07-28 12:00",
+  "batchNo": 0,
+  "systemUser": 37029
+}
+'
+;
+
+EXEC [dbo].[addDrugTranRecord] @params
+GO
