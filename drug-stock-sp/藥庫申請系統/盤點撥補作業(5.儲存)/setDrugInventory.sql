@@ -12,59 +12,32 @@ AS BEGIN
    DECLARE @demandStock       CHAR(04) = JSON_VALUE(@params, '$.demandStock');
    DECLARE @drugCode          INT      = JSON_VALUE(@params, '$.drugCode');
    DECLARE @adjustQty         INT      = JSON_VALUE(@params, '$.adjustQty'); -- 調整量 => 調撥數量 - 庫存量
-   DECLARE @stockQty          INT      = JSON_VALUE(@params, '$.stockQty');
    DECLARE @demandQty         INT      = JSON_VALUE(@params, '$.demandQty');
-   DECLARE @inventoryQty      INT      = JSON_VALUE(@params, '$.inventoryQty');
-   DECLARE @defaultSystemUser INT      = JSON_VALUE(@params, '$.defaultSystemUser');
    DECLARE @newBatchNo        INT      = 0;
-   DECLARE @newStockQty       INT      = 0;
-   DECLARE @expInfos          NVARCHAR(MAX);
    DECLARE @errorSeverity     INT;
    DECLARE @errorMessage      NVARCHAR(4000);
    DECLARE @procedureName     VARCHAR(20) = 'setDrugInventory';
 
-   -- BEGIN TRAN
-   IF (@tranCount = 0) BEGIN TRAN;
-
    BEGIN TRY
-         IF @demandQty > 0 
-         BEGIN 
+         -- BEGIN TRAN
+         IF (@tranCount = 0) BEGIN TRAN;
+
+         -- 檢查需求量 > 0 是否添加到需求單
+         IF @demandQty > 0 BEGIN
             EXEC [dbo].[setDrugDemand] @params
          END
+         
+         -- 判斷盤點量跟現有庫存量是否相同
+         IF @adjustQty != 0 BEGIN
 
-         IF @adjustQty != 0
-         BEGIN
-            SET @params = JSON_MODIFY(@params, '$.totalQty', @inventoryQty);
-            EXEC @expInfos = [fn].[getDrugExpInfos] @demandStock, @drugCode
+            -- 取得最新一筆批號寫入資料
+            EXEC @newBatchNo = [fn].[getDrugBatchNo] @demandStock, @drugCode
+            SET @params = JSON_MODIFY(@params, '$.batchNo', @newBatchNo);
 
-            IF [fn].[JSON_COUNT] (@expInfos) = 0
-            BEGIN
+            EXEC [dbo].[addDrugTranRecord] @params
+            EXEC [dbo].[setDrugStockDt] @params
+            EXEC [dbo].[modifyDrugStockMtQty] @params
 
-                EXEC [dbo].[setDrugStockMt] @params
-                EXEC [dbo].[addDrugTranRecord] @params
-
-                SET @params = JSON_Modify(@params, '$.systemUser', @defaultSystemUser);
-                
-                EXEC [dbo].[setDrugStockDt] @params
-
-            END         
-            ELSE 
-            BEGIN
-
-                EXEC @expInfos = [fn].[JSON_ARRAY] @expInfos, 0	
-                SET @newBatchNo = JSON_VALUE(@expInfos, '$.batchNo');
-                SET @newStockQty = JSON_VALUE(@expInfos, '$.stockQty');
-                SET @params = JSON_MODIFY(@params, '$.batchNo', @newBatchNo);
-
-                EXEC [dbo].[addDrugTranRecord] @params
-
-                SET @stockQty = @newStockQty + @adjustQty;
-                SET @params = JSON_MODIFY(@params, '$.stockQty', @stockQty);
-
-                EXEC [dbo].[setDrugStockDt] @params
-                EXEC [dbo].[setDrugStockMt] @params
-
-            END
          END
 
          IF (@tranCount = 0) COMMIT TRAN;
