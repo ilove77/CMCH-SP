@@ -6,13 +6,14 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/08/23
-CREATE PROCEDURE [dbo].[setDrugInventory](@params NVARCHAR(MAX))
+ALTER PROCEDURE [dbo].[setDrugInventory](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @tranCount         INT      = @@TRANCOUNT;
    DECLARE @demandStock       CHAR(04) = JSON_VALUE(@params, '$.demandStock');
    DECLARE @drugCode          INT      = JSON_VALUE(@params, '$.drugCode');
    DECLARE @adjustQty         INT      = JSON_VALUE(@params, '$.adjustQty'); -- 調整量 => 調撥數量 - 庫存量
    DECLARE @stockQty          INT      = JSON_VALUE(@params, '$.stockQty');
+   DECLARE @demandQty         INT      = JSON_VALUE(@params, '$.demandQty');
    DECLARE @inventoryQty      INT      = JSON_VALUE(@params, '$.inventoryQty');
    DECLARE @defaultSystemUser INT      = JSON_VALUE(@params, '$.defaultSystemUser');
    DECLARE @newBatchNo        INT      = 0;
@@ -26,7 +27,7 @@ AS BEGIN
    IF (@tranCount = 0) BEGIN TRAN;
 
    BEGIN TRY
-         IF @inventoryQty > 0 
+         IF @demandQty > 0 
          BEGIN 
             EXEC [dbo].[setDrugDemand] @params
          END
@@ -38,12 +39,14 @@ AS BEGIN
 
             IF [fn].[JSON_COUNT] (@expInfos) = 0
             BEGIN
+
                 EXEC [dbo].[setDrugStockMt] @params
                 EXEC [dbo].[addDrugTranRecord] @params
 
                 SET @params = JSON_Modify(@params, '$.systemUser', @defaultSystemUser);
                 
                 EXEC [dbo].[setDrugStockDt] @params
+
             END         
             ELSE 
             BEGIN
@@ -62,7 +65,7 @@ AS BEGIN
                 EXEC [dbo].[setDrugStockMt] @params
 
             END
-        END
+         END
 
          IF (@tranCount = 0) COMMIT TRAN;
    END TRY
