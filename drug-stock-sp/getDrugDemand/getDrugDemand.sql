@@ -10,7 +10,8 @@ CREATE PROCEDURE [dbo].[getDrugDemand](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @demandNo   INT = JSON_VALUE(@params, '$.demandNo');
    DECLARE @purchaseNo INT = JSON_VALUE(@params, '$.purchaseNo');
-   
+   DECLARE @drugCode   INT = JSON_VALUE(@params, '$.drugCode');
+
    SELECT [demandNo]    = a.DemandNo,
           [purchaseNo]  = a.PurchaseNo,
           [drugCode]    = a.DrugCode,
@@ -34,6 +35,7 @@ AS BEGIN
      FROM [dbo].[DrugDemand] AS a
     WHERE a.DemandNo   = [fn].[numberFilter](@demandNo, a.DemandNo)
       AND a.PurchaseNo = [fn].[numberFilter](@purchaseNo, a.PurchaseNo)
+      AND a.DrugCode   = [fn].[numberFilter](@drugCode, a.DrugCode)
       FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
 END
 GO
@@ -41,8 +43,9 @@ GO
 DECLARE @params NVARCHAR(MAX) =
 '
 {
-   "demandNo": 10540,
-   "purchaseNo": 0
+   "demandNo": 9721,
+   "purchaseNo": 79738,
+   "drugCode": 3678
 }
 ';
 
