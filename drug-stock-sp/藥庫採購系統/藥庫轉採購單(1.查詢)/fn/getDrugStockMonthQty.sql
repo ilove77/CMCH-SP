@@ -21,5 +21,5 @@ AS BEGIN
       AND b.DrugCode  = @drugCode
       AND b.TranType  = @tranType
       AND b.TranMonth = @tranMonth
-   RETURN @monthQty
+   RETURN ISNULL(@monthQty, 0)
 END

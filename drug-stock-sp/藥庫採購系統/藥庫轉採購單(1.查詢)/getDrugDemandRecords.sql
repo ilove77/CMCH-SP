@@ -18,9 +18,10 @@ AS BEGIN
    DECLARE @itemType    TINYINT  = 10; --項目類別 => 10: 藥庫
    DECLARE @isComplexIn BIT      = 1;  --是否廠商協助直入 => 1: 直入
   
-   SELECT [medCode]            = c.MedCode,
+   SELECT [StockNo]            = a.DemandStock,
+          [medCode]            = c.MedCode,
           [drugCode]           = a.DrugCode,     
-          [genericName]        = c.GenericName1, 
+          [drugName]           = c.GenericName1, 
           [safetyQty]          = b.SafetyQty,     
           [packageQty]         = b.PackageQty,   
           [buyQty]             = a.DemandQty, 

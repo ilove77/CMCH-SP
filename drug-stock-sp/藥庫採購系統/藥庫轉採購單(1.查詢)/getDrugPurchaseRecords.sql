@@ -11,30 +11,33 @@ AS BEGIN
    DECLARE @stockNo            CHAR(04) = JSON_VALUE(@params, '$.stockNo');
    DECLARE @orgNo              CHAR(10) = JSON_VALUE(@params, '$.orgNo');
    DECLARE @drugCode           INT      = JSON_VALUE(@params, '$.drugCode');
+   DECLARE @purchaseType       TINYINT  = JSON_VALUE(@params, '$.purchaseType');
    DECLARE @lastMonth          INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
    DECLARE @itemType           TINYINT  = 10; 
    DECLARE @currentTime        DATETIME = GETDATE();
 
-    SELECT [medCode]               = b.MedCode,
-           [genericName]           = b.GenericName1,
-           [drugCode]              = b.DrugCode,
-           [totalQty]              = a.TotalQty,
-           [safetyQty]             = a.SafetyQty,
-           [packageQty]            = a.PackageQty,
-           [purchaseDays]          = a.PurchaseDays,
-           [buyQty]                = [fn].[getDrugBuyQty](a.PurchaseType, [fn].[getDrugStockMonthQty]('DrugStock', a.StockNo, b.drugCode, @lastMonth),a.PurchaseQty, a.PackageQty),
-           [onWayQty]              = [fn].[getDrugOnWayQty](a.StockNo, b.DrugCode),                   
-           [unitName]              = [fn].[getUnitBasicName](b.ChargeUnit),                           
-           [stockTotalQty]         = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, b.DrugCode), 
-           [stockMonthQty]         = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth)  
-      FROM DrugStockMt   AS a,
-           DrugBasic     AS b,
-           PurchaseBasic AS c
+   SELECT [stockNo]       = a.StockNo,
+          [medCode]       = b.MedCode,
+          [drugName]      = b.GenericName1,
+          [drugCode]      = b.DrugCode,
+          [totalQty]      = a.TotalQty,
+          [safetyQty]     = a.SafetyQty,
+          [packageQty]    = a.PackageQty,
+          [purchaseDays]  = a.PurchaseDays,
+          [buyQty]        = a.purchaseQty,
+          [onWayQty]      = [fn].[getDrugOnWayQty](a.StockNo, b.DrugCode),                   
+          [unitName]      = [fn].[getUnitBasicName](b.ChargeUnit),                           
+          [stockTotalQty] = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, a.DrugCode), 
+          [stockMonthQty] = [fn].[getDrugStockMonthQty]('DrugStock', a.StockNo, a.drugCode, @lastMonth)  
+     FROM [dbo].[DrugStockMt]   AS a,
+          [dbo].[DrugBasic]     AS b,
+          [dbo].[PurchaseBasic] AS c
      WHERE a.StockNo    = @stockNo
-       AND a.DrugCode   = [fn].[numberFilter](@drugCode, a.DrugCode)   
+       AND a.DrugCode   = [fn].[numberFilter](@drugCode, a.DrugCode)
+       AND a.PurchaseType = @purchaseType   
        AND a.StartTime <= @currentTime
        AND a.EndTime   >= @currentTime
-       AND b.DrugCode   = a.DrugCode
+       AND b.DrugCode     = a.DrugCode   
        AND b.StartTime <= @currentTime
        AND b.EndTime   >= @currentTime
        AND c.ItemCode   = a.DrugCode
@@ -52,7 +55,8 @@ DECLARE @params NVARCHAR(MAX) =
 {
    "stockNo": "1P11",
    "orgNo": "",
-   "medCode": "IATTTEST",
+   "drugCode": "3678",
+   "purchaseTyep": 5,
    "currentDate": "2021-08-09"
 }
 ';
