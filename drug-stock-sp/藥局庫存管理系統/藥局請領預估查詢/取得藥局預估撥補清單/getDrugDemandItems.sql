@@ -12,47 +12,46 @@ AS BEGIN
    DECLARE @outStockTime1  DATETIME = JSON_VALUE(@params, '$.outStockTime1');
    DECLARE @outStockTime2  DATETIME = JSON_VALUE(@params, '$.outStockTime2');
    DECLARE @tranType       TINYINT  = 25; --交易類別 => 25: 消耗
-   DECLARE @demandType     TINYINT  = 60; --需求類別 => 60: 自動撥補
    DECLARE @currentTime    DATETIME = GETDATE();
 
-   WITH DrugStockItems AS (
-        SELECT [StockNo]      = a.StockNo,
-               [DrugCode]     = a.DrugCode,
-               [SafetyQty]    = a.SafetyQty,
-               [UnarrivalQty] = [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode) + a.TotalQty,
-               [TranQty]      = [fn].[getDrugTranQty](a.StockNo, a.DrugCode, @tranType, @outStockTime1, @outStockTime2),
-               [DeliverQty]   = [fn].[getDrugDeliverQty](a.MaxQty, a.TotalQty, a.PackageQty)
+    WITH DrugStockItems AS (
+        SELECT [StockNo]       = a.StockNo,
+               [DrugCode]      = a.DrugCode,
+               [SafetyQty]     = a.SafetyQty,
+               [MaxQty]        = a.MaxQty,
+               [TotalQty]      = a.TotalQty,
+               [PackageQty]    = a.PackageQty,
+               [UnarrivalQty]  = [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode) + a.TotalQty,
+               [TranQty]       = [fn].[getDrugTranQty](a.StockNo, a.DrugCode, @tranType, @outStockTime1, @outStockTime2),
+               [DeliverQty]    = [fn].[getDrugDeliverQty](a.MaxQty, a.TotalQty, a.PackageQty),
+               [StockUnitName] = [fn].[getUnitName](a.StockUnit)
           FROM [dbo].[DrugStockMt] AS a
          WHERE a.StockNo    = @stockNo
+           AND a.TotalQty   < a.SafetyQty
            AND a.StartTime <= @currentTime
            AND a.EndTime   >= @currentTime
    )
    SELECT [stockNo]        = a.StockNo,
-          [medCode]        = c.MedCode,
+          [medCode]        = b.MedCode,
           [drugCode]       = a.DrugCode,
-          [drugName]       = c.DrugName,
+          [drugName]       = b.DrugName,
           [safetyQty]      = a.SafetyQty,
-          [maxQty]         = b.MaxQty,
-          [stockQty]       = b.TotalQty,
-          [packageQty]     = b.PackageQty,
+          [maxQty]         = a.MaxQty,
+          [stockQty]       = a.TotalQty,
+          [packageQty]     = a.PackageQty,
+          [unarrivalQty]   = a.UnarrivalQty,
           [tranQty]        = a.TranQty,
           [deliverQty]     = a.DeliverQty,
-          [chargeUnitName] = [fn].[getUnitName](c.ChargeUnit),
-          [stockUnitName]  = [fn].[getUnitName](b.StockUnit)
-     FROM [DrugStockItems]    AS a,
-          [dbo].[DrugStockMt] AS b,
-          [dbo].[DrugBasic]   AS c
+          [stockUnitName]  = a.StockUnitName,
+          [chargeUnitName] = [fn].[getUnitName](b.ChargeUnit)
+     FROM [DrugStockItems]  AS a,
+          [dbo].[DrugBasic] AS b
     WHERE a.TranQty     > 0
       AND a.DeliverQty  > 0
-      AND b.StockNo     = a.StockNo
+      AND a.SafetyQty  >= a.UnarrivalQty
       AND b.DrugCode    = a.DrugCode
-      AND b.SafetyQty  >= a.UnarrivalQty
-      AND b.TotalQty    < a.SafetyQty
       AND b.StartTime  <= @currentTime
       AND b.EndTime    >= @currentTime
-      AND c.DrugCode    = a.DrugCode
-      AND c.StartTime  <= @currentTime
-      AND c.EndTime    >= @currentTime
       FOR JSON PATH
 END
 GO
