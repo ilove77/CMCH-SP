@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥庫需求資訊
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/07/30
+--- 修訂日期：2021/08/31
 CREATE PROCEDURE [dbo].[getDrugDemandRecords](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @stockNo     CHAR(04) = JSON_VALUE(@params, '$.stockNo');
@@ -18,18 +18,20 @@ AS BEGIN
    DECLARE @itemType    TINYINT  = 10; --項目類別 => 10: 藥庫
    DECLARE @isComplexIn BIT      = 1;  --是否廠商協助直入 => 1: 直入
   
-   SELECT [StockNo]            = a.DemandStock,
-          [medCode]            = c.MedCode,
-          [drugCode]           = a.DrugCode,     
-          [drugName]           = c.GenericName1, 
-          [safetyQty]          = b.SafetyQty,     
-          [packageQty]         = b.PackageQty,   
-          [buyQty]             = a.DemandQty, 
-          [onWayQty]           = [fn].[getDrugOnWayQty](a.SupplyStock, c.DrugCode),
-          [stockTotalQty]      = [fn].[getDrugStockTotalQty]('DrugStock', a.SupplyStock, b.DrugCode),
-          [stockMonthQty]      = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth),   
-          [unitName]           = [fn].[getUnitBasicName](c.ChargeUnit),           
-          [demandStockName]    = [fn].[getDepartShortName](a.DemandStock)           
+   SELECT [stockNo]         = a.DemandStock,
+          [medCode]         = c.MedCode,
+          [drugCode]        = a.DrugCode,     
+          [drugName]        = c.GenericName1, 
+          [safetyQty]       = b.SafetyQty,     
+          [packageQty]      = b.PackageQty,   
+          [buyQty]          = a.DemandQty,
+          [warnDate]        = d.WarnDate,
+          [remark]          = a.Remark,
+          [onWayQty]        = [fn].[getDrugOnWayQty](a.SupplyStock, c.DrugCode),
+          [stockTotalQty]   = [fn].[getDrugStockTotalQty]('DrugStock', a.SupplyStock, b.DrugCode),
+          [stockMonthQty]   = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth),   
+          [unitName]        = [fn].[getUnitBasicName](c.ChargeUnit),           
+          [demandStockName] = [fn].[getDepartShortName](a.DemandStock)                                
      FROM [dbo].[DrugDemand]    AS a,
           [dbo].[DrugStockMt]   AS b,
           [dbo].[DrugBasic]     AS c,

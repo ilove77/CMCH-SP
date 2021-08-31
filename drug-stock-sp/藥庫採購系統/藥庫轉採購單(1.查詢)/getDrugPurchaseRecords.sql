@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥庫採購資訊
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/07/30
+--- 修訂日期：2021/08/31
 CREATE PROCEDURE [dbo].[getDrugPurchaseRecords](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @stockNo            CHAR(04) = JSON_VALUE(@params, '$.stockNo');
@@ -25,6 +25,7 @@ AS BEGIN
           [packageQty]    = a.PackageQty,
           [purchaseDays]  = a.PurchaseDays,
           [buyQty]        = a.purchaseQty,
+          [warnDate]      = c.WarnDate,
           [onWayQty]      = [fn].[getDrugOnWayQty](a.StockNo, b.DrugCode),                   
           [unitName]      = [fn].[getUnitBasicName](b.ChargeUnit),                           
           [stockTotalQty] = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, a.DrugCode), 
