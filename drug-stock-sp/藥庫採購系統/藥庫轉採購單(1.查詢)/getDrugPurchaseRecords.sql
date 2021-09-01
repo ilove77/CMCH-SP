@@ -33,21 +33,21 @@ AS BEGIN
      FROM [dbo].[DrugStockMt]   AS a,
           [dbo].[DrugBasic]     AS b,
           [dbo].[PurchaseBasic] AS c
-     WHERE a.StockNo      = @stockNo
-       AND a.DrugCode     = [fn].[numberFilter](@drugCode, a.DrugCode)
-       AND a.PurchaseType = @purchaseType   
-       AND a.StartTime   <= @currentTime
-       AND a.EndTime     >= @currentTime
-       AND b.DrugCode     = a.DrugCode   
-       AND b.StartTime   <= @currentTime
-       AND b.EndTime     >= @currentTime
-       AND c.ItemCode     = a.DrugCode
-       AND c.ItemType     = @itemType
-       AND c.Represent    = [fn].[stringFilter](@orgNo, c.Represent)
-       AND c.StartTime   <= @currentTime
-       AND c.EndTime     >= @currentTime
-     ORDER BY b.MedCode
-       FOR JSON PATH
+    WHERE a.StockNo      = @stockNo
+      AND a.DrugCode     = [fn].[numberFilter](@drugCode, a.DrugCode)
+      AND a.PurchaseType = @purchaseType   
+      AND a.StartTime   <= @currentTime
+      AND a.EndTime     >= @currentTime
+      AND b.DrugCode     = a.DrugCode   
+      AND b.StartTime   <= @currentTime
+      AND b.EndTime     >= @currentTime
+      AND c.ItemCode     = a.DrugCode
+      AND c.ItemType     = @itemType
+      AND c.Represent    = [fn].[stringFilter](@orgNo, c.Represent)
+      AND c.StartTime   <= @currentTime
+      AND c.EndTime     >= @currentTime
+    ORDER BY b.MedCode
+      FOR JSON PATH
 END
 GO
 
