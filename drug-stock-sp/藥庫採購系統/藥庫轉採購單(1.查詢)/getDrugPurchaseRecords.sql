@@ -8,13 +8,13 @@ GO
 --- 修訂日期：2021/08/31
 CREATE PROCEDURE [dbo].[getDrugPurchaseRecords](@params NVARCHAR(MAX))
 AS BEGIN
-   DECLARE @stockNo            CHAR(04) = JSON_VALUE(@params, '$.stockNo');
-   DECLARE @orgNo              CHAR(10) = JSON_VALUE(@params, '$.orgNo');
-   DECLARE @drugCode           INT      = JSON_VALUE(@params, '$.drugCode');
-   DECLARE @purchaseType       TINYINT  = JSON_VALUE(@params, '$.purchaseType');
-   DECLARE @lastMonth          INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
-   DECLARE @itemType           TINYINT  = 10; --項目類別 => 10: 藥庫
-   DECLARE @currentTime        DATETIME = GETDATE();
+   DECLARE @stockNo      CHAR(04) = JSON_VALUE(@params, '$.stockNo');
+   DECLARE @orgNo        CHAR(10) = JSON_VALUE(@params, '$.orgNo');
+   DECLARE @drugCode     INT      = JSON_VALUE(@params, '$.drugCode');
+   DECLARE @purchaseType TINYINT  = JSON_VALUE(@params, '$.purchaseType');
+   DECLARE @lastMonth    INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
+   DECLARE @itemType     TINYINT  = 10; --項目類別 => 10: 藥庫
+   DECLARE @currentTime  DATETIME = GETDATE();
 
    SELECT [stockNo]       = a.StockNo,
           [medCode]       = b.MedCode,
