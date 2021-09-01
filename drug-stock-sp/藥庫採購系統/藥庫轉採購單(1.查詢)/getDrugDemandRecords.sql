@@ -27,6 +27,7 @@ AS BEGIN
           [buyQty]          = a.DemandQty,
           [warnDate]        = d.WarnDate,
           [remark]          = a.Remark,
+          [purchaseDays]    = b.PurchaseDays,
           [onWayQty]        = [fn].[getDrugOnWayQty](a.SupplyStock, c.DrugCode),
           [stockTotalQty]   = [fn].[getDrugStockTotalQty]('DrugStock', a.SupplyStock, b.DrugCode),
           [stockMonthQty]   = [fn].[getDrugStockMonthQty]('DrugStock', a.SupplyStock, b.drugCode, @lastMonth),   
