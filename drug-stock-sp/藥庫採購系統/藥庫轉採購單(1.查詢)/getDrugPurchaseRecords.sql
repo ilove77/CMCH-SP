@@ -13,7 +13,7 @@ AS BEGIN
    DECLARE @drugCode           INT      = JSON_VALUE(@params, '$.drugCode');
    DECLARE @purchaseType       TINYINT  = JSON_VALUE(@params, '$.purchaseType');
    DECLARE @lastMonth          INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
-   DECLARE @itemType           TINYINT  = 10; 
+   DECLARE @itemType           TINYINT  = 10; --項目類別 => 10: 藥庫
    DECLARE @currentTime        DATETIME = GETDATE();
 
    SELECT [stockNo]       = a.StockNo,
