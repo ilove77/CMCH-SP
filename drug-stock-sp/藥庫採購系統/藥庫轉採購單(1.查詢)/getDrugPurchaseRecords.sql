@@ -46,7 +46,7 @@ AS BEGIN
        AND c.Represent    = [fn].[stringFilter](@orgNo, c.Represent)
        AND c.StartTime   <= @currentTime
        AND c.EndTime     >= @currentTime
-       ORDER BY b.MedCode
+     ORDER BY b.MedCode
        FOR JSON PATH
 END
 GO
