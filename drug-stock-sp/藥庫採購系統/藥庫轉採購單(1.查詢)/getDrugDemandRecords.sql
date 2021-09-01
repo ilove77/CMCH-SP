@@ -66,9 +66,9 @@ DECLARE @params NVARCHAR(MAX) =
    "orgNo": "",
    "drugCode": 0,
    "demandTypes": [40,45],
-   "currentDate": "2021-08-10",
-   "demandTime1": "2021-08-01 00:00:00",
-   "demandTime2": "2021-08-31 23:59:59"
+   "currentDate": "2021-09-01",
+   "demandTime1": "2021-06-01 10:21:00",
+   "demandTime2": "2021-09-01 10:21:00"
 }
 ';
 
