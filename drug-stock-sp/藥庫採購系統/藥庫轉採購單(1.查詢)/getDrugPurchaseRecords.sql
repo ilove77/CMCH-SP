@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥庫採購資訊
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/08/31
+--- 修訂日期：2021/09/07
 CREATE PROCEDURE [dbo].[getDrugPurchaseRecords](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @stockNo      CHAR(04)    = JSON_VALUE(@params, '$.stockNo');
