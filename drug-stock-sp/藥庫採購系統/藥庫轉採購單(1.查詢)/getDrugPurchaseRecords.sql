@@ -8,45 +8,48 @@ GO
 --- 修訂日期：2021/08/31
 CREATE PROCEDURE [dbo].[getDrugPurchaseRecords](@params NVARCHAR(MAX))
 AS BEGIN
-   DECLARE @stockNo      CHAR(04) = JSON_VALUE(@params, '$.stockNo');
-   DECLARE @orgNo        CHAR(10) = JSON_VALUE(@params, '$.orgNo');
-   DECLARE @drugCode     INT      = JSON_VALUE(@params, '$.drugCode');
-   DECLARE @purchaseType TINYINT  = JSON_VALUE(@params, '$.purchaseType');
-   DECLARE @lastMonth    INT      = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
-   DECLARE @itemType     TINYINT  = 10; --項目類別 => 10: 藥庫
-   DECLARE @currentTime  DATETIME = GETDATE();
+   DECLARE @stockNo      CHAR(04)    = JSON_VALUE(@params, '$.stockNo');
+   DECLARE @orgNo        CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
+   DECLARE @drugCode     INT         = JSON_VALUE(@params, '$.drugCode');
+   DECLARE @medCode      VARCHAR(10) = JSON_VALUE(@params, '$.medCode');
+   DECLARE @purchaseType TINYINT     = JSON_VALUE(@params, '$.purchaseType');
+   DECLARE @lastMonth    INT         = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
+   DECLARE @itemType     TINYINT     = 10; 
+   DECLARE @currentTime  DATETIME    = GETDATE();
 
    SELECT [stockNo]       = a.StockNo,
-          [medCode]       = b.MedCode,
-          [drugName]      = b.GenericName1,
-          [drugCode]      = b.DrugCode,
+          [medCode]       = c.MedCode,
+          [drugName]      = c.GenericName1,
+          [drugCode]      = c.DrugCode,
           [totalQty]      = a.TotalQty,
           [safetyQty]     = a.SafetyQty,
           [packageQty]    = a.PackageQty,
+          [purchaseType]  = a.PurchaseType,
           [purchaseDays]  = a.PurchaseDays,
-          [buyQty]        = a.purchaseQty,
-          [warnDate]      = c.WarnDate,
-          [onWayQty]      = [fn].[getDrugOnWayQty](a.StockNo, b.DrugCode),                   
-          [unitName]      = [fn].[getUnitBasicName](b.ChargeUnit),                           
-          [stockTotalQty] = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, a.DrugCode), 
-          [stockMonthQty] = [fn].[getDrugStockMonthQty]('DrugStock', a.StockNo, a.drugCode, @lastMonth)  
+          [buyQty]        = a.PurchaseQty,
+          [warnDate]      = b.WarnDate,
+          [onWayQty]      = [fn].[getDrugOnWayQty](a.StockNo, a.DrugCode),                   
+          [unitName]      = [fn].[getUnitBasicName](c.ChargeUnit),
+          [stockTotalQty] = [fn].[getDrugStockTotalQty]('DrugStock', a.StockNo, a.DrugCode),
+          [stockMonthQty] = [fn].[getDrugStockMonthQty]('DrugStock', a.StockNo, a.DrugCode, @lastMonth)  
      FROM [dbo].[DrugStockMt]   AS a,
-          [dbo].[DrugBasic]     AS b,
-          [dbo].[PurchaseBasic] AS c
+          [dbo].[PurchaseBasic] AS b,
+          [dbo].[DrugBasic]     AS c        
     WHERE a.StockNo      = @stockNo
       AND a.DrugCode     = [fn].[numberFilter](@drugCode, a.DrugCode)
       AND a.PurchaseType = @purchaseType   
       AND a.StartTime   <= @currentTime
       AND a.EndTime     >= @currentTime
-      AND b.DrugCode     = a.DrugCode   
+      AND b.ItemCode     = a.DrugCode
+      AND b.ItemType     = @itemType
+      AND b.Represent    = [fn].[stringFilter](@orgNo, b.Represent)
       AND b.StartTime   <= @currentTime
       AND b.EndTime     >= @currentTime
-      AND c.ItemCode     = a.DrugCode
-      AND c.ItemType     = @itemType
-      AND c.Represent    = [fn].[stringFilter](@orgNo, c.Represent)
+      AND c.DrugCode     = a.DrugCode
+      AND c.MedCode      LIKE [fn].[stringFilter](@medCode, c.MedCode)   
       AND c.StartTime   <= @currentTime
       AND c.EndTime     >= @currentTime
-    ORDER BY b.MedCode
+    ORDER BY c.MedCode
       FOR JSON PATH
 END
 GO
@@ -56,8 +59,9 @@ DECLARE @params NVARCHAR(MAX) =
 {
    "stockNo": "1P11",
    "orgNo": "",
-   "drugCode": "3678",
-   "purchaseType": 5,
+   "drugCode": "",
+   "medCode": "C%",
+   "purchaseType": 80,
    "currentDate": "2021-09-01"
 }
 ';
