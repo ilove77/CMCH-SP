@@ -17,8 +17,9 @@ AS BEGIN
    DECLARE @lastMonth   INT         = [fn].[getLastMonth](JSON_VALUE(@params, '$.currentDate'));
    DECLARE @tranStatus  TINYINT     = 10; --申請狀態 => 10: 申請中
    DECLARE @itemType    TINYINT     = 10; --項目類別 => 10: 藥庫
+   DECLARE @purchaseNo  INT         = 0;  --採購編號 => 0: 直入編號為 0
    DECLARE @isComplexIn BIT         = 1;  --是否廠商協助直入 => 1: 直入
-  
+   
    SELECT [stockNo]         = a.DemandStock,
           [medCode]         = d.MedCode,
           [drugCode]        = a.DrugCode,     
@@ -42,6 +43,7 @@ AS BEGIN
           [dbo].[DrugBasic]     AS d
     WHERE a.SupplyStock = @stockNo
       AND a.TranStatus  = @tranStatus
+      AND a.purchaseNo  = @purchaseNo
       AND a.DrugCode    = [fn].[numberFilter](@drugCode, a.DrugCode)
       AND a.DemandType  IN (SELECT VALUE FROM OPENJSON(@params, '$.demandTypes'))
       AND a.DemandTime  BETWEEN @demandTime1 AND @demandTime2
