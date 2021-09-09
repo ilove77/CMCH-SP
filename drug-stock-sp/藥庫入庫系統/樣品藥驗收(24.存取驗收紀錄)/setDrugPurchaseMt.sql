@@ -5,7 +5,7 @@ GO
 --- 程序說明：設定藥品採購主檔
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/07/02
+--- 修訂日期：2021/09/09
 CREATE PROCEDURE [dbo].[setDrugPurchaseMt](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @systemTime    DATETIME       = GETDATE();

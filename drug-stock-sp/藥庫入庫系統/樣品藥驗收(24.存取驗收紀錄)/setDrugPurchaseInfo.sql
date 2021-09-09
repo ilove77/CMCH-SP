@@ -16,7 +16,9 @@ AS BEGIN
    BEGIN TRY
          IF (@tranCount = 0) BEGIN TRAN; 
 
-         EXEC [dbo].[setDrugPurchaseMt] @params 
+         EXEC @purchaseNo = [dbo].[setDrugPurchaseMt] @params 
+
+         SET @params = JSON_MODIFY(@params, '$.purchaseNo', @purchaseNo)
 
          EXEC [dbo].[setDrugPurchaseDt] @params       
 
