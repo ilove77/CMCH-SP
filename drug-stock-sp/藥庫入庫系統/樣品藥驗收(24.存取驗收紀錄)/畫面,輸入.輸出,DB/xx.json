@@ -1,0 +1,17 @@
+put: api:/WebApi/DrugStockManager/AutoDemand/GetEstPharmacyDemand/
+input:{
+    "checkNo": 0,
+    "lotNo": "F45654",
+    "expDate": "20210823",
+    "invoiceNo": "",
+    "invoiceDate": "",
+    "medCode": "IATTTEST",
+    "drugCode": 3678,
+    "checkQty": "3",
+    "purchaseQty": 0,
+    "checkType": "30",
+    "purchaseNo": 0,
+    "systemUser": 37029,
+    "inStockNo": "1P11"
+}
+

@@ -1,12 +1,17 @@
 USE [HealthResource]
 GO
+/****** Object:  StoredProcedure [dbo].[getDrugPurchaseChecks]    Script Date: 2021/9/9 下午 04:09:39 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 
 --- 程序名稱：getDrugPurchaseChecks
 --- 程序說明：取得藥品採購驗收資訊
---- 編訂人員：蔡易志
+--- 編訂人員：蔡易志、林芳郁
 --- 校閱人員：孫培然
---- 修訂日期：2021/06/29
-ALTER PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
+--- 修訂日期：2021/09/09
+CREATE PROCEDURE [dbo].[getDrugPurchaseChecks](@params NVARCHAR(MAX))
 AS BEGIN 
    DECLARE @orgNo           CHAR(10)    = JSON_VALUE(@params, '$.orgNo');
    DECLARE @purchaseNo      INT         = JSON_VALUE(@params, '$.purchaseNo');
@@ -19,17 +24,19 @@ AS BEGIN
    DECLARE @purchaseStatus2 TINYINT     = 69;
    
    SELECT [purchaseNo]     = a.PurchaseNo,     
-          [purchaseTime]   = b.PurchaseTime,      
+          [inStockNo]      = a.InStockNo,
+          [isDelay]        = a.IsDelay,
           [remQty]         = a.DemandQty,    
           [purchaseQty]    = a.PurchaseQty,   
           [giftQty]        = a.GiftQty,
           [checkQty]       = a.CheckQty,       
-          [medCode]        = c.MedCode,      
           [drugCode]       = a.DrugCode,      
-          [drugName]       = c.DrugName,      
+          [purchaseTime]   = b.PurchaseTime,      
           [orgNo]          = b.OrgNo,
           [deliveryTime]   = b.DeliveryTime,
-          [isDelay]        = a.IsDelay,
+          [remark]         = b.Remark,
+          [drugName]       = c.DrugName,      
+          [medCode]        = c.MedCode,      
           [orgName]        = [fn].[getOrgName](b.orgNo),              
           [unitName]       = [fn].[getUnitBasicName](a.unit),
           [stockName]      = [fn].[getShortName](a.InStockNo),
@@ -51,20 +58,3 @@ AS BEGIN
       AND c.MedCode        = [fn].[stringFilter](@medCode, c.MedCode)
       FOR JSON PATH
 END
-GO
-
-DECLARE @params NVARCHAR(max) =
-'
-{
-    "medCode": "",
-    "drugCode": 0,
-    "orgNo": "",
-    "purchaseNo": 0,
-    "purchaseDate1": "2021-08-10",
-    "purchaseDate2": "2021-08-17",
-    "stockNo": "1%"
-}
-'
-
-EXEC [dbo].[getDrugPurchaseChecks] @params
-GO
