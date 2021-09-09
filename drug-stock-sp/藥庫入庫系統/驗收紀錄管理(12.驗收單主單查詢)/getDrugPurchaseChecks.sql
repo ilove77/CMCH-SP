@@ -1,10 +1,5 @@
 USE [HealthResource]
 GO
-/****** Object:  StoredProcedure [dbo].[getDrugPurchaseChecks]    Script Date: 2021/9/9 下午 04:09:39 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
 
 --- 程序名稱：getDrugPurchaseChecks
 --- 程序說明：取得藥品採購驗收資訊
