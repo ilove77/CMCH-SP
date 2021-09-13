@@ -6,7 +6,6 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/07/02
-
 CREATE PROCEDURE [dbo].[setDrugTrialRecord](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @systemTime    DATETIME       = GETDATE();
@@ -28,7 +27,15 @@ AS BEGIN
                           SystemUser INT           '$.systemUser',
                           TrialUser  INT           '$.trialUser '
                         )
-               ) AS b (CheckNo, IsEffect, IsExterior, IsLicense, IsLotNo, IsCoA, Remark, SystemUser, TrialUser) 
+               ) AS b (CheckNo,
+                       IsEffect, 
+                       IsExterior, 
+                       IsLicense, 
+                       IsLotNo, 
+                       IsCoA, 
+                       Remark, 
+                       SystemUser, 
+                       TrialUser) 
             ON (a.CheckNo = b.CheckNo)    
          WHEN MATCHED THEN 
               UPDATE SET  

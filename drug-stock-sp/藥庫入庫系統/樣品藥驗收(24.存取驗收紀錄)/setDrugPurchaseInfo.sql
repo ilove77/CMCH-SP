@@ -5,7 +5,7 @@ GO
 --- 程序說明：設定單筆藥品採購資訊
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/09/10
+--- 修訂日期：2021/09/13
 CREATE PROCEDURE [dbo].[setDrugPurchaseInfo](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @errorSeverity  INT;
