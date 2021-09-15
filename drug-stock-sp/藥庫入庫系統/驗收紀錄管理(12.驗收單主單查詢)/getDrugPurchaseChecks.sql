@@ -53,3 +53,20 @@ AS BEGIN
       AND c.MedCode        = [fn].[stringFilter](@medCode, c.MedCode)
       FOR JSON PATH
 END
+GO
+
+DECLARE @params NVARCHAR(max) =
+'
+{
+    "medCode": "IATTTEST",
+    "drugCode": 3678,
+    "orgNo": "8888      ",
+    "purchaseNo": 368739,
+    "purchaseDate1": "20210820",
+    "purchaseDate2": "20210820",
+    "stockNo": "1%"
+}
+'
+
+EXEC [dbo].[getDrugPurchaseChecks] @params
+GO
