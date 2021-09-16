@@ -30,6 +30,7 @@ AS BEGIN
       AND a.ItemCode      = [fn].[numberFilter] (@itemCode, a.ItemCode)
       AND a.CheckNo       = [fn].[numberFilter] (@checkNo, a.CheckNo)
       FOR JSON PATH
+
 END
 GO
 
