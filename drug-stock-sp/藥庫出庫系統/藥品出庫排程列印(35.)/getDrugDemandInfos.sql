@@ -53,11 +53,12 @@ GO
 DECLARE @params NVARCHAR(max) =
 '
 {
-    "demandDate1": "2021-01-01",
-    "demandDate2": "2021-06-30",
+    "demandDate1": "2021-09-01",
+    "demandDate2": "2021-09-30",
     "demandStock": "1NDC",
     "medCode": "",
     "supplyStock": "1P11",
+    "tranStatus": 10
 }
 '
 EXEC [dbo].[getDrugDemandInfos] @params
