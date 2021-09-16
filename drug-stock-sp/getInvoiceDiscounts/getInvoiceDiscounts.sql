@@ -29,6 +29,7 @@ AS BEGIN
       AND a.DiscountsType = [fn].[numberFilter] (@discountsType, a.DiscountsType)
       AND a.ItemCode      = [fn].[numberFilter] (@itemCode, a.ItemCode)
       AND a.CheckNo       = [fn].[numberFilter] (@checkNo, a.CheckNo)
+      FOR JSON PATH
 END
 GO
 
