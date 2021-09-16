@@ -6,7 +6,7 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/09/16
-CREATE PROCEDURE [dbo].[getDrugDemandDispences](@params NVARCHAR(MAX))
+ALTER PROCEDURE [dbo].[getDrugDemandDispences](@params NVARCHAR(MAX))
 AS BEGIN
 
    DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params,'$.demandStock');
@@ -31,6 +31,8 @@ AS BEGIN
           [medCode]         = d.MedCode,
           [drugCode]        = b.DrugCode,
           [drugName]        = d.DrugName,
+          [genericName2]    = d.GenericName2,
+          [brandName1]      = d.BrandName1,
           [tranStatus]      = b.TranStatus,
           [demandQty]       = b.DemandQty,
           [demandStock]     = b.DemandStock,
@@ -42,6 +44,8 @@ AS BEGIN
           [contactExt]      = b.ContactExt,
           [drugType]        = c.DrugType,
           [totalQty]        = c.TotalQty,
+          [isComplexIn]     = c.IsComplexIn, 
+          [remark]          = b.Remark,
           [demandUserName]  = [fn].[getEmpName](b.DemandUser),
           [demandStockName] = [fn].[getDepartShortName](b.DemandStock),
           [supplyStockName] = [fn].[getDepartShortName](b.SupplyStock),
@@ -65,13 +69,13 @@ AS BEGIN
       AND b.StopReason  = 0
       AND b.TranStatus  NOT IN (80,81)
       AND c.DrugCode    = b.DrugCode
-      AND c.StockNo     = b.SupplyStock 
+      AND c.StockNo     = b.SupplyStock
       AND d.DrugCode    = b.DrugCode
       AND d.MedCode     = [fn].[stringFilter](@medCode, d.MedCode)
       AND d.StartTime  <= b.DemandTime
       AND d.EndTime    >= b.DemandTime
     ORDER BY b.DemandTime DESC, d.MedCode
-
+      FOR JSON PATH
 END
 GO
 
@@ -82,7 +86,7 @@ DECLARE @params NVARCHAR(MAX) =
     "supplyStock": "1P11",
     "medCode": "",
     "demandDate1": "2021-06-16",
-    "demandDate2": "2021-09-16",
+    "demandDate2": "2021-09-18",
     "demandTypes": [60],
     "scheduleNos": [25,47,49,50,58,64,69,70,71],
     "tranStatus": [10,18]
