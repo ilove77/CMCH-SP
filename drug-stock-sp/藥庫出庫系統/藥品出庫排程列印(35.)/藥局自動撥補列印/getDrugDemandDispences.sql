@@ -56,7 +56,7 @@ AS BEGIN
           [dbo].[DrugDemand]  AS b,
           [dbo].[DrugStockMt] AS c,
           [dbo].[DrugBasic]   AS d
-    WHERE a.StockNo     = b.DemandStock
+    WHERE b.DemandStock = a.StockNo
       AND b.DemandTime  BETWEEN @demandTime1 AND @demandTime2
       AND b.DemandType  IN (SELECT VALUE FROM OPENJSON(@params, '$.demandTypes'))
       AND b.TranStatus  IN (SELECT VALUE FROM OPENJSON(@params, '$.tranStatus'))
@@ -65,7 +65,7 @@ AS BEGIN
       AND b.StopReason  = 0
       AND b.TranStatus  NOT IN (80,81)
       AND c.DrugCode    = b.DrugCode
-      AND c.StockNo     = b.SupplyStock
+      AND c.StockNo     = b.SupplyStock 
       AND d.DrugCode    = b.DrugCode
       AND d.MedCode     = [fn].[stringFilter](@medCode, d.MedCode)
       AND d.StartTime  <= b.DemandTime
