@@ -9,11 +9,11 @@ GO
 ALTER PROCEDURE [dbo].[getDrugDemandDispences](@params NVARCHAR(MAX))
 AS BEGIN
 
-   DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params,'$.demandStock');
-   DECLARE @supplyStock CHAR(04)  = JSON_VALUE(@params,'$.supplyStock');
-   DECLARE @medCode     CHAR(08)  = JSON_VALUE(@params,'$.medCode');
-   DECLARE @demandTime1 DATETIME  = [fn].[getDateMinTime](JSON_VALUE(@params,'$.demandDate1'));
-   DECLARE @demandTime2 DATETIME  = [fn].[getDateMaxTime](JSON_VALUE(@params,'$.demandDate2'));
+   DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params, '$.demandStock');
+   DECLARE @supplyStock CHAR(04)  = JSON_VALUE(@params, '$.supplyStock');
+   DECLARE @medCode     CHAR(08)  = JSON_VALUE(@params, '$.medCode');
+   DECLARE @demandTime1 DATETIME  = [fn].[getDateMinTime](JSON_VALUE(@params, '$.demandDate1'));
+   DECLARE @demandTime2 DATETIME  = [fn].[getDateMaxTime](JSON_VALUE(@params, '$.demandDate2'));
    DECLARE @currentTime DATETIME  = GETDATE();
 
    WITH ScheduleItems AS (
