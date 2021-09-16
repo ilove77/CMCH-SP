@@ -81,7 +81,6 @@ DECLARE @params NVARCHAR(MAX) =
     "demandStock": "1P50",
     "supplyStock": "1P11",
     "medCode": "",
-    "drugName": "",
     "demandDate1": "2021-06-16",
     "demandDate2": "2021-09-16",
     "demandTypes": [60],
