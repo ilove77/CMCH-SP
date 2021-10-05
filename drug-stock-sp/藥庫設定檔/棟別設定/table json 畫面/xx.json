@@ -1,0 +1,198 @@
+名稱:藥庫設定檔管理│棟別設定
+api(put): /WebApi/DrugStockManager/DrugStock/SetStockBulidInfo
+input:{
+    "branchCode": "1",
+    "building": "C",
+    "stockNos": [
+        {
+            "departNo": "1144",
+            "departName": "立夫血析室",
+            "building": "C"
+        },
+        {
+            "departNo": "1141",
+            "departName": "血液透析室",
+            "building": "C"
+        },
+        {
+            "departNo": "1R00",
+            "departName": "放射線部",
+            "building": "C"
+        },
+        {
+            "departNo": "1Y0A",
+            "departName": "A棟開刀房",
+            "building": "C"
+        },
+        {
+            "departNo": "1Y00",
+            "departName": "護理部OR",
+            "building": "C"
+        },
+        {
+            "departNo": "1N37",
+            "departName": "護理部3A恢復",
+            "building": "C"
+        },
+        {
+            "departNo": "1890",
+            "departName": "麻醉部",
+            "building": "C"
+        },
+        {
+            "departNo": "189A",
+            "departName": "Ａ棟麻醉部",
+            "building": "C"
+        },
+        {
+            "departNo": "1N16",
+            "departName": "BURN護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N9E",
+            "departName": "9E護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N0E",
+            "departName": "10E護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NAE",
+            "departName": "11E護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N5A",
+            "departName": "5A護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N8A",
+            "departName": "8A護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N7A",
+            "departName": "7A護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1623",
+            "departName": "護理部產房",
+            "building": "C"
+        },
+        {
+            "departNo": "11C6",
+            "departName": "心血系心導管",
+            "building": "C"
+        },
+        {
+            "departNo": "1NLC",
+            "departName": "20C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NKC",
+            "departName": "19C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NJC",
+            "departName": "18C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NHC",
+            "departName": "17C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NGC",
+            "departName": "16C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NFC",
+            "departName": "15C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NDC",
+            "departName": "14C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NCC",
+            "departName": "13C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NBC",
+            "departName": "12C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1NAC",
+            "departName": "11C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N9C",
+            "departName": "9C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N8C",
+            "departName": "8C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N34",
+            "departName": "護理部5C恢復",
+            "building": "C"
+        },
+        {
+            "departNo": "1N30",
+            "departName": "RICU護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N22",
+            "departName": "RCC3護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N21",
+            "departName": "RCC2護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N18",
+            "departName": "RCC1護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N10",
+            "departName": "CCU護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N0C",
+            "departName": "10C護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N09",
+            "departName": "SCU1護理站",
+            "building": "C"
+        },
+        {
+            "departNo": "1N08",
+            "departName": "MICU護理站",
+            "building": "C"
+        }
+    ]
+}
