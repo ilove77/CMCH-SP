@@ -2,17 +2,17 @@ USE [HealthResource]
 GO
 
 --- 程序名稱: getDrugExpInfos
---- 程序說明: 取得藥品效期資料
+--- 程序說明: 取得藥品最新一筆效期資料
 --- 編訂人員: 蔡易志
 --- 校閱人員: 孫培然
 --- 修訂日期: 2021/08/23
-CREATE FUNCTION [fn].[getDrugExpInfos](@demandStock CHAR(04), @drugCode INT)
+CREATE FUNCTION [fn].[getDrugExpInfos](@stockNo CHAR(04), @drugCode INT)
 RETURNS NVARCHAR(MAX)
 AS BEGIN
-   DECLARE @expInfos NVARCHAR(MAX);
+   DECLARE @ NVARCHAR(MAX);
    
-   SET @expInfos =
-     (    
+
+     
        SELECT [stockNo]  = a.StockNo,  
               [drugCode] = a.DrugCode,
               [batchNo]  = a.BatchNo,  
@@ -25,7 +25,7 @@ AS BEGIN
           AND a.DrugCode = @drugCode
         ORDER BY b.ExpDate DESC
           FOR JSON PATH
-     )
+     
    RETURN @expInfos
 END
 GO

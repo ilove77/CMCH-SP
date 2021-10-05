@@ -38,8 +38,8 @@ AS BEGIN
                UPDATE SET
                       RequestUrl  = ISNULL(s.RequestUrl , t.RequestUrl),
                       Params      = ISNULL(s.Params , t.Params),
-                      SystemUser  = ISNULL(s.SystemUser , t.SystemUser),
-                      SystemTime  = ISNULL(s.SystemTime , t.SystemTime)
+                      SystemUser  = s.systemUser,
+                      SystemTime  = @systemTime
           WHEN NOT MATCHED THEN
                INSERT (
                       RequestUrl,
@@ -51,7 +51,7 @@ AS BEGIN
                       s.RequestUrl,
                       s.Params,
                       s.SystemUser,
-                      s.SystemTime
+                      @systemTime
                       );
          
    END TRY
