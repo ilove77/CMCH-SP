@@ -17,13 +17,14 @@ AS BEGIN
    DECLARE @currentTime DATETIME  = GETDATE();
 
    WITH ScheduleItems AS (
-        SELECT DISTINCT [StockNo] = a.StockNo
+        SELECT [StockNo] = a.StockNo
           FROM [dbo].[DrugScheduleDt] AS a,
                [dbo].[DrugScheduleMt] AS b
          WHERE a.ScheduleNo IN (SELECT VALUE FROM OPENJSON(@params, '$.scheduleNos'))
            AND b.ScheduleNo = a.ScheduleNo
            AND b.StartDate <= @currentTime
            AND b.EndTime   >= @currentTime
+         GROUP BY a.StockNo  
    )
 
    SELECT [demandNo]        = b.DemandNo,
@@ -56,7 +57,7 @@ AS BEGIN
           [demandTypeName]  = [fn].[getOptionName](b.DemandType, 'DrugDemand', 'DemandType'),
           [tranStatusName]  = [fn].[getOptionName](b.TranStatus, 'DrugDemand', 'TranStatus'),
           [drugTypeName]    = [fn].[getOptionName](c.DrugType, 'DrugBasic','DrugType')
-     FROM ScheduleItems AS a,
+     FROM ScheduleItems       AS a,
           [dbo].[DrugDemand]  AS b,
           [dbo].[DrugStockMt] AS c,
           [dbo].[DrugBasic]   AS d
