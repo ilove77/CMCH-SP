@@ -6,7 +6,7 @@ GO
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
 --- 修訂日期：2021/09/16
-ALTER PROCEDURE [dbo].[getDrugDemandDispences](@params NVARCHAR(MAX))
+CREATE PROCEDURE [dbo].[getDrugDemandDispences](@params NVARCHAR(MAX))
 AS BEGIN
 
    DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params, '$.demandStock');
