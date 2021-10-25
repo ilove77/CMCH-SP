@@ -27,7 +27,7 @@ AS BEGIN
             
             SET @systemTime = JSON_MODIFY(@params, '$.systemTime', @systemTime);
 
-            IF (@checkInvoiceNo = 1) BEGIN
+            IF (@checkInvoiceNo = 0) BEGIN
                   --修改發票後，將已經沒有任何品項的發票刪除
                   SET @params = JSON_MODIFY(@params, '$.invoiceNo', @orginalInvNo);
                   EXEC [dbo].[removeInvoiceRecord] @params
