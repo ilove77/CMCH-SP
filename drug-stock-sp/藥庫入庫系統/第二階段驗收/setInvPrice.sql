@@ -8,14 +8,14 @@ GO
 --- 修訂日期：2021/10/25
 CREATE PROCEDURE [dbo].[setInvPrice](@params NVARCHAR(MAX))
 AS BEGIN
-   DECLARE @invoiceNo      CHAR(10)       = JSON_VALUE(@params,'$.invoiceNo');
+   DECLARE @invoiceNo       CHAR(10)       = JSON_VALUE(@params,'$.invoiceNo');
    DECLARE @orginalInvNo    CHAR(10)       = JSON_VALUE(@params,'$.orginalInvNo');
    DECLARE @checkInvoiceNo  BIT            = JSON_VALUE(@params,'$.checkInvoiceNo');
    DECLARE @purchaseNo      INT            = JSON_VALUE(@params,'$.purchaseNo');
    DECLARE @checkNo         INT            = JSON_VALUE(@params,'$.checkNo');
+   DECLARE @realPayAmount   INT            = 0;
    DECLARE @originPayAmount INT            = 0; 
    DECLARE @invoicePrice    DECIMAL(10,3);
-   DECLARE @realPayAmount   INT;
    DECLARE @systemTime      VARCHAR(23)    = CONVERT(varchar, GETDATE(), 121);
    DECLARE @tranCount       INT            = @@TRANCOUNT;
    DECLARE @procedureName   VARCHAR(40)    = 'setInvPrice';
