@@ -57,3 +57,29 @@ AS BEGIN
          THROW;
    END CATCH
 END
+GO
+
+DECLARE @params NVARCHAR(MAX) = 
+'
+{
+    "invoiceNo" : "RD03248659",
+    "orginalInvNo" : "0000985901",
+    "taxType": 10,
+    "purchaseNo" : 358041,
+    "checkInvoiceNo": 0,
+    "checkNo" : 481479,
+    "invoiceType" : 10,
+    "systemUser" : 999999,
+    "payDate":"2999-12-31",
+    "voucherNo" : "",
+    "invoiceStatus": 20,
+    "realPayAmount": 170,
+    "invoicePrice": 0,
+    "tranStatus": 70,
+    "purchaseNo": 9859,
+    "invoiceDate":"2021-09-30"
+}
+';
+
+EXEC [dbo].[setInvPrice] @params
+GO

@@ -51,3 +51,13 @@ AS BEGIN
    END CATCH
 END
 GO
+-- EXEC PROCEDURE
+DECLARE @params NVARCHAR(MAX) =
+'
+{
+ "orginalInvNo" : "CF47834118",
+ "invoiceNo" : "CF88888888"
+}
+'
+-- EXEC [dbo].[modifyInvoiceDiscountsByInvNo] @params
+GO
