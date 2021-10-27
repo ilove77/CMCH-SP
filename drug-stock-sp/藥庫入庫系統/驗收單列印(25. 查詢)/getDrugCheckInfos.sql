@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥庫驗收單資訊
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/06/25
+--- 修訂日期：2021/10/27
 CREATE PROCEDURE [dbo].[getDrugCheckInfos](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @branchNo    INT      = JSON_VALUE(@params, '$.branchNo');
@@ -16,18 +16,18 @@ AS BEGIN
    DECLARE @checkTime2  DATETIME = [fn].[getDateMaxTime](JSON_VALUE(@params, '$.checkDate2'));
    DECLARE @numberType  INT      = 10;
    
-   SELECT a.CheckNo     AS [checkNo],
-          c.PurchaseNo  AS [purchaseNo],
-          a.CheckTime   AS [checkTime],
-          f.MedCode     AS [medCode],
-          f.DrugName    AS [drugName],
-          a.CheckQty    AS [checkOty],
-          a.InvoiceNo   AS [invoiceNo],
-          d.InvoiceDate AS [invoiceDate],
-          c.OrgNo       AS [orgNo],
-          e.DisplayNo   AS [displayNo],
-          [fn].[getOrgName](c.OrgNo)      AS [orgName],
-          [fn].[getUnitBasicName](b.Unit) AS [unitName]
+   SELECT [checkNo]     = a.CheckNo,      
+          [purchaseNo]  = c.PurchaseNo,   
+          [checkTime]   = a.CheckTime,    
+          [medCode]     = f.MedCode,      
+          [drugName]    = f.DrugName,     
+          [checkQty]    = a.CheckQty,     
+          [invoiceNo]   = a.InvoiceNo,    
+          [invoiceDate] = d.InvoiceDate,  
+          [orgNo]       = c.OrgNo,        
+          [displayNo]   = e.DisplayNo,    
+          [orgName]     = [fn].[getOrgName](c.OrgNo),
+          [unitName]    = [fn].[getUnitBasicName](b.Unit)  
      FROM [dbo].[DrugChecking]   AS a,
           [dbo].[DrugPurchaseDt] AS b,
           [dbo].[DrugPurchaseMt] AS c,
