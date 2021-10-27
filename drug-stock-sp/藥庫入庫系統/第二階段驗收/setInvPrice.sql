@@ -25,25 +25,25 @@ AS BEGIN
    BEGIN TRY
          IF (@tranCount = 0) BEGIN TRAN;
             
-            SET @systemTime = JSON_MODIFY(@params, '$.systemTime', @systemTime);
+         SET @systemTime = JSON_MODIFY(@params, '$.systemTime', @systemTime);
 
-            IF (@checkInvoiceNo = 0) BEGIN
-                  --修改發票後，將已經沒有任何品項的發票刪除
-                  SET @params = JSON_MODIFY(@params, '$.invoiceNo', @orginalInvNo);
-                  EXEC [dbo].[removeInvoiceRecord] @params
-                  EXEC [dbo].[removeInvoiceDiscounts] @params
-            END
+         IF (@checkInvoiceNo = 0) BEGIN
+               --修改發票後，將已經沒有任何品項的發票刪除
+               SET @params = JSON_MODIFY(@params, '$.invoiceNo', @orginalInvNo);
+               EXEC [dbo].[removeInvoiceRecord] @params
+               EXEC [dbo].[removeInvoiceDiscounts] @params
+         END
 
-            -- 重新計算發票金額，並判斷更改後的發票是否存在，存在的話加上存在的金額，不存在的話加0
-            SET @invoicePrice  = [fn].[getDrugPayAmount] (@purchaseNo,@invoiceNo);
-            SET @realPayAmount = @invoicePrice - [fn].[getInvDiscountAmounts] (@checkNo,@invoiceNo);
-            
-            
-            SET @originPayAmount = ISNULL(JSON_VALUE(JSON_QUERY([fn].[getInvoiceInfo](@invoiceNo)),'$.realPayAmount'),0);
-            SET @params          = JSON_MODIFY(@params,'$.invoicePrice',@invoicePrice);
-            SET @params          = JSON_MODIFY(@params,'$.realPayAmount',@realPayAmount+@originPayAmount);
-            SET @params          = JSON_MODIFY(@params,'$.invoiceNo',@invoiceNo);
-            EXEC [dbo].[setInvoiceRecord] @params
+         -- 重新計算發票金額，並判斷更改後的發票是否存在，存在的話加上存在的金額，不存在的話加0
+         SET @invoicePrice  = [fn].[getDrugPayAmount] (@purchaseNo,@invoiceNo);
+         SET @realPayAmount = @invoicePrice - [fn].[getInvDiscountAmounts] (@checkNo,@invoiceNo);
+         
+         
+         SET @originPayAmount = ISNULL(JSON_VALUE(JSON_QUERY([fn].[getInvoiceInfo](@invoiceNo)),'$.realPayAmount'),0);
+         SET @params          = JSON_MODIFY(@params,'$.invoicePrice',@invoicePrice);
+         SET @params          = JSON_MODIFY(@params,'$.realPayAmount',@realPayAmount+@originPayAmount);
+         SET @params          = JSON_MODIFY(@params,'$.invoiceNo',@invoiceNo);
+         EXEC [dbo].[setInvoiceRecord] @params
 
          IF (@tranCount = 0) COMMIT TRAN;
    END TRY
