@@ -5,13 +5,15 @@ GO
 --- 程序說明：取得藥品查核資訊
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/10/27
+--- 修訂日期：2021/11/1
 CREATE PROCEDURE [dbo].[getDrugTrialInfos](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @trialDate1 DATE        = JSON_VALUE(@params, '$.trialDate1');
    DECLARE @trialDate2 DATE        = JSON_VALUE(@params, '$.trialDate2');
+   DECLARE @branchNo   TINYINT     = JSON_VALUE(@params, '$.branchNo');
    DECLARE @stockNo    VARCHAR(04) = JSON_VALUE(@params, '$.stockNo');
    DECLARE @medCode    CHAR(08)    = JSON_VALUE(@params, '$.medCode');
+   DECLARE @numberType TINYINT     = 10; --號碼類別
 
    SELECT [medCode]     = d.MedCode,       
           [drugName]    = d.GenericName1,  
@@ -24,7 +26,8 @@ AS BEGIN
           [isLotNo]     = a.IsLotNo,       
           [isEffect]    = a.IsEffect,      
           [isCoA]       = a.IsCoA,         
-          [remark]      = a.Remark,        
+          [remark]      = a.Remark,
+          [checkNo]     = [fn].[getMatDisplayNo](@branchNo, @numberType, a.CheckNo),         
           [trialUser]   = [fn].[getEmpName](a.TrialUser),
           [isHighAlert] = [fn].[getDrugHighAlert](d.MedCode, b.CheckTime)   
      FROM [dbo].[DrugTrialRecord] AS a,
@@ -49,6 +52,7 @@ DECLARE @params NVARCHAR(MAX) =
 {
     "trialDate1": "2021-06-21",
     "trialDate2": "2021-07-01",
+    "branchNo": 1,
     "stockNo": "1%",
     "medCode": ""
 }
