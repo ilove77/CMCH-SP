@@ -1,4 +1,4 @@
-USE [healthCare]
+USE [HealthCare]
 GO
 
 --- 程序名稱: getStockBulidInfos
