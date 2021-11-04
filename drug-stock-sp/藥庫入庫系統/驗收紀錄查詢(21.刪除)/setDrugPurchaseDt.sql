@@ -5,7 +5,7 @@ GO
 --- 程序說明：設定藥品採購明細檔
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/07/12
+--- 修訂日期：2021/11/04
 CREATE PROCEDURE [dbo].[setDrugPurchaseDt](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @systemTime    DATETIME       = GETDATE();
@@ -66,7 +66,7 @@ AS BEGIN
                     t.ClearDate    = ISNULL(s.ClearDate, t.ClearDate),   
                     t.ClearReason  = ISNULL(s.ClearReason, t.ClearReason), 
                     t.SystemUser   = s.SystemUser,
-                    t.SystemTime   = @SystemTime       
+                    t.SystemTime   = @systemTime       
          WHEN NOT MATCHED THEN
               INSERT (
                        PurchaseNo,  
@@ -102,7 +102,7 @@ AS BEGIN
                        s.ClearDate,   
                        s.ClearReason, 
                        s.SystemUser,
-                       @systemTime  
+                       @systemTime 
                      );                 
    END TRY
    BEGIN CATCH
