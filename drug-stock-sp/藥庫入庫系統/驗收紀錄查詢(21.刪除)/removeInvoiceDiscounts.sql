@@ -5,17 +5,17 @@ GO
 --- 程序說明：刪除發票折讓檔
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/08/04
+--- 修訂日期：2021/11/05
 CREATE PROCEDURE [dbo].[removeInvoiceDiscounts](@params NVARCHAR(MAX))
 AS BEGIN
-   DECLARE @invoiceNo     CHAR(10)       = JSON_VALUE(@params, '$.invoiceNo');
+   DECLARE @checkNo       INT       = JSON_VALUE(@params, '$.checkNo');
    DECLARE @errorSeverity INT;
    DECLARE @errorMessage  NVARCHAR(4000);
    DECLARE @procedureName VARCHAR(30)    = 'removeInvoiceDiscounts';
 
    BEGIN TRY
          DELETE [dbo].[InvoiceDiscounts]
-          WHERE InvoiceNo = @invoiceNo
+          WHERE CheckNo = @checkNo
    END TRY
    BEGIN CATCH
          SELECT @errorSeverity = ERROR_SEVERITY(), @errorMessage = ERROR_MESSAGE();
@@ -29,7 +29,7 @@ GO
 DECLARE @params NVARCHAR(MAX) = 
 '
 {
-   "invoiceNo": "CF47834118"  
+   "checkNo": 1499
 }
 '; 
 
