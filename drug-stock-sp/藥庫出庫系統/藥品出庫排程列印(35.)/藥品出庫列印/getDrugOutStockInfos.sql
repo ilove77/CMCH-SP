@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥品出庫列印資料
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/10/29
+--- 修訂日期：2021/11/09
 CREATE PROCEDURE [dbo].[getDrugOutStockInfos](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params, '$.demandStock');
@@ -15,36 +15,37 @@ AS BEGIN
    DECLARE @demandTime2 DATETIME  = [fn].[getDateMaxTime](JSON_VALUE(@params, '$.demandDate2'));
    DECLARE @currentTime DATETIME  = GETDATE();
 
-   SELECT [demandNo]        = a.DemandNo,
-          [demandType]      = a.DemandType,
-          [medCode]         = c.MedCode,
-          [drugCode]        = a.DrugCode,
-          [drugName]        = c.DrugName,
-          [genericName2]    = c.GenericName2,
-          [brandName1]      = c.BrandName1,
-          [tranStatus]      = a.TranStatus,
-          [demandQty]       = a.DemandQty,
-          [demandStock]     = a.DemandStock,
-          [supplyStock]     = a.SupplyStock,
-          [demandUser]      = a.DemandUser,
-          [demandUnit]      = a.DemandUnit,
-          [demandTime]      = a.DemandTime,
-          [checkTime]       = a.CheckTime,
-          [contactExt]      = a.ContactExt,
-          [drugType]        = b.DrugType,
-          [isComplexIn]     = b.IsComplexIn, 
-          [remark]          = a.Remark,
-          [totalQty]        = [fn].[getDrugTotalQty](a.SupplyStock, a.DrugCode),
-          [demandUserName]  = [fn].[getEmpName](a.DemandUser),
-          [demandStockName] = [fn].[getDepartShortName](a.DemandStock),
-          [supplyStockName] = [fn].[getDepartShortName](a.SupplyStock),
-          [demandUnitName]  = [fn].[getUnitBasicName](a.DemandUnit),
-          [supplyQty]       = [fn].[getDrugSupplyQty](a.DemandNo),
-          [lotNo]           = [fn].[getDrugBatchLotNo](a.SupplyStock, b.DrugCode),
-          [drugBatchInfos]  = JSON_QUERY([fn].[getDrugBatchInfos](a.SupplyStock, b.DrugCode, c.MedCode)),
-          [demandTypeName]  = [fn].[getOptionName](a.DemandType, 'DrugDemand', 'DemandType'),
-          [tranStatusName]  = [fn].[getOptionName](a.TranStatus, 'DrugDemand', 'TranStatus'),
-          [drugTypeName]    = [fn].[getOptionName](b.DrugType, 'DrugBasic','DrugType')
+   SELECT [demandNo]           = a.DemandNo,
+          [demandType]         = a.DemandType,
+          [medCode]            = c.MedCode,
+          [drugCode]           = a.DrugCode,
+          [drugName]           = c.DrugName,
+          [genericName2]       = c.GenericName2,
+          [brandName1]         = c.BrandName1,
+          [tranStatus]         = a.TranStatus,
+          [demandQty]          = a.DemandQty,
+          [demandStock]        = a.DemandStock,
+          [supplyStock]        = a.SupplyStock,
+          [demandUser]         = a.DemandUser,
+          [demandUnit]         = a.DemandUnit,
+          [demandTime]         = a.DemandTime,
+          [checkTime]          = a.CheckTime,
+          [contactExt]         = a.ContactExt,
+          [drugType]           = b.DrugType,
+          [isComplexIn]        = b.IsComplexIn, 
+          [remark]             = a.Remark,
+          [totalQty]           = [fn].[getDrugTotalQty](a.SupplyStock, a.DrugCode),
+          [demandUserName]     = [fn].[getEmpName](a.DemandUser),
+          [demandStockName]    = [fn].[getDepartShortName](a.DemandStock),
+          [supplyStockName]    = [fn].[getDepartShortName](a.SupplyStock),
+          [demandUnitName]     = [fn].[getUnitBasicName](a.DemandUnit),
+          [supplyQty]          = [fn].[getDrugSupplyQty](a.DemandNo),
+          [lotNo]              = [fn].[getDrugBatchLotNo](a.SupplyStock, b.DrugCode),
+          [drugBatchInfos]     = JSON_QUERY([fn].[getDrugBatchInfos](a.SupplyStock, b.DrugCode, c.MedCode)),
+          [demandTypeName]     = [fn].[getOptionName](a.DemandType, 'DrugDemand', 'DemandType'),
+          [tranStatusName]     = [fn].[getOptionName](a.TranStatus, 'DrugDemand', 'TranStatus'),
+          [drugTypeName]       = [fn].[getOptionName](b.DrugType, 'DrugBasic','DrugType'),
+          [demandStockBuilder] = [fn].[getDepartBuilder](a.DemandStock)
      FROM [dbo].[DrugDemand]  AS a,
           [dbo].[DrugStockMt] AS b,
           [dbo].[DrugBasic]   AS c
