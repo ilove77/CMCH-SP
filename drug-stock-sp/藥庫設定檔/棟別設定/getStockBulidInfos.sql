@@ -1,6 +1,3 @@
-USE [HealthCare]
-GO
-
 --- 程序名稱: getStockBulidInfos
 --- 程序說明: 取得棟別查詢資訊
 --- 編訂人員: 蔡易志
@@ -10,7 +7,9 @@ CREATE PROCEDURE [dbo].[getStockBulidInfos] (@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @departNo VARCHAR(04) = JSON_VALUE(@params,'$.departNo');
    DECLARE @builder  CHAR(01)    = JSON_VALUE(@params,'$.builder');
+
    SELECT [departNo]   = a.DepartNo,
+          [builder]    = a.Builder,
           [departName] = a.ShortName,
           [startDate]  = a.StartDate,
           [endDate]    = a.EndDate
