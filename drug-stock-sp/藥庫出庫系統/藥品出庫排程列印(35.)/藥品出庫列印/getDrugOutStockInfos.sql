@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥品出庫列印資料
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/11/11
+--- 修訂日期：2021/11/09
 CREATE PROCEDURE [dbo].[getDrugOutStockInfos](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params, '$.demandStock');
@@ -38,14 +38,14 @@ AS BEGIN
           [demandUserName]      = [fn].[getEmpName](a.DemandUser),
           [demandStockName]     = [fn].[getDepartShortName](a.DemandStock),
           [supplyStockName]     = [fn].[getDepartShortName](a.SupplyStock),
-          [unitName]            = [fn].[getUnitBasicName](a.DemandUnit),
+          [demandUnitName]      = [fn].[getUnitBasicName](a.DemandUnit),
           [supplyQty]           = [fn].[getDrugSupplyQty](a.DemandNo),
           [lotNo]               = [fn].[getDrugBatchLotNo](a.SupplyStock, b.DrugCode),
           [drugBatchInfos]      = JSON_QUERY([fn].[getDrugBatchInfos](a.SupplyStock, b.DrugCode, c.MedCode)),
           [demandTypeName]      = [fn].[getOptionName](a.DemandType, 'DrugDemand', 'DemandType'),
           [tranStatusName]      = [fn].[getOptionName](a.TranStatus, 'DrugDemand', 'TranStatus'),
           [drugTypeName]        = [fn].[getOptionName](b.DrugType, 'DrugBasic','DrugType'),
-          [demandStockBuliding] = [fn].[getDepartBuilder](a.DemandStock),
+          [demandStockBuilding] = [fn].[getDepartBuilder](a.DemandStock),
           [storageNo]           = [fn].[getDrugStorageNo](a.SupplyStock, a.DrugCode)
      FROM [dbo].[DrugDemand]  AS a,
           [dbo].[DrugStockMt] AS b,
