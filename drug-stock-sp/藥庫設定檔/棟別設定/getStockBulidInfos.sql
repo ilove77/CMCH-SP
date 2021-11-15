@@ -1,3 +1,6 @@
+USE [HealthCare]
+GO
+
 --- 程序名稱: getStockBulidInfos
 --- 程序說明: 取得棟別查詢資訊
 --- 編訂人員: 蔡易志
