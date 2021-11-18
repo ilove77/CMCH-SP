@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥品出庫列印資料
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/11/09
+--- 修訂日期：2021/11/18
 CREATE PROCEDURE [dbo].[getDrugOutStockInfos](@params NVARCHAR(MAX))
 AS BEGIN
    DECLARE @demandStock CHAR(04)  = JSON_VALUE(@params, '$.demandStock');
@@ -34,6 +34,7 @@ AS BEGIN
           [drugType]            = b.DrugType,
           [isComplexIn]         = b.IsComplexIn, 
           [remark]              = a.Remark,
+          [packageQty]          = b.PackageQty,
           [totalQty]            = [fn].[getDrugTotalQty](a.SupplyStock, a.DrugCode),
           [demandUserName]      = [fn].[getEmpName](a.DemandUser),
           [demandStockName]     = [fn].[getDepartShortName](a.DemandStock),

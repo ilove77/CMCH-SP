@@ -5,7 +5,7 @@ GO
 --- 程序說明：取得藥品撥補需求單
 --- 編訂人員：蔡易志
 --- 校閱人員：孫培然
---- 修訂日期：2021/11/12
+--- 修訂日期：2021/11/18
 CREATE PROCEDURE [dbo].[getDrugDemandDispences](@params NVARCHAR(MAX))
 AS BEGIN
 
@@ -45,6 +45,7 @@ AS BEGIN
           [contactExt]          = b.ContactExt,
           [drugType]            = c.DrugType,
           [totalQty]            = c.TotalQty,
+          [packageQty]          = c.PackageQty,
           [isComplexIn]         = c.IsComplexIn, 
           [remark]              = b.Remark,
           [demandUserName]      = [fn].[getEmpName](b.DemandUser),
